@@ -6,3 +6,6 @@ load: STARTUP
 authors: [ DevBD1 ]
 description: Spigot development library, built for the latest version.
 website: https://cublex.net
+commands:
+  testlang:
+    description: Test localization messages

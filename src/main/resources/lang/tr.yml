@@ -1,3 +1,16 @@
-prefix: "&6[Corlex] &f"
-welcome: "{prefix}Sunucuya hoş geldin!"
-goodbye: "{prefix}Güle güle!"
+# lang/tr.yml
+
+meta:
+  prefix: "&6[Corlex] &f"
+
+error:
+  no-permission: "{prefix}Bunu yapmak için izniniz yok."
+  player-only: "{prefix}Bu komut sadece oyuncular tarafından kullanılabilir."
+
+corlex:
+  welcome: "{prefix}{player}, {world} dünyasına hoş geldin!"
+  status: "{prefix}{coins} altının var ve rütben {rank}."
+
+landlex:
+  claim-success: "{prefix}Bölge başarıyla alındı!"
+  already-claimed: "{prefix}Bu bölge zaten alınmış."
