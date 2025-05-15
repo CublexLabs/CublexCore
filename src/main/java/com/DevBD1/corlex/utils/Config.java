@@ -9,6 +9,10 @@ import java.util.Map;
 public class Config {
     private static FileConfiguration config;
 
+    public static boolean isLoggingEnabled() {
+        return config.getBoolean("logging-enabled", true);
+    }
+
     public static void load(JavaPlugin plugin) {
         plugin.saveDefaultConfig();
         config = plugin.getConfig();

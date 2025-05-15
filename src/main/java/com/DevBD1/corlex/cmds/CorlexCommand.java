@@ -2,11 +2,14 @@ package com.DevBD1.corlex.cmds;
 
 import com.DevBD1.corlex.lang.Lang;
 import com.DevBD1.corlex.utils.Config;
+import com.DevBD1.corlex.utils.CorlexLogger;
 import org.bukkit.Bukkit;
 import org.bukkit.command.*;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class CorlexCommand implements CommandExecutor, TabCompleter {
@@ -89,6 +92,18 @@ public class CorlexCommand implements CommandExecutor, TabCompleter {
 
             String result = Lang.t(key, locale, dynamic);
             sender.sendMessage(result);
+            return true;
+        }
+
+        if (sub.equals("log")) {
+            if (!sender.hasPermission("corlex.admin")) {
+                send(sender, "corlex.reload.no-permission");
+                return true;
+            }
+
+            String date = (args.length >= 2) ? args[1] : LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+            List<String> lines = CorlexLogger.readRecentLines(date, 10);
+            lines.forEach(sender::sendMessage);
             return true;
         }
 
