@@ -1,0 +1,9 @@
+# {prefix} to be used in the language files
+prefix: "&6[Corlex] &f"
+
+# {server-name}
+server-name: "Cublex"
+
+# {discord}, {telegram} etc.
+discord: "https://discord.gg/cublex"
+telegram: "https://t.me/mcublex"

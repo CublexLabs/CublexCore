@@ -1,8 +1,5 @@
 # lang/tr.yml
 
-meta:
-  prefix: "&6[Corlex] &f"
-
 error:
   no-permission: "{prefix}Bunu yapmak için izniniz yok."
   player-only: "{prefix}Bu komut sadece oyuncular tarafından kullanılabilir."
@@ -10,6 +7,9 @@ error:
 corlex:
   welcome: "{prefix}{player}, {world} dünyasına hoş geldin!"
   status: "{prefix}{coins} altının var ve rütben {rank}."
+  reload:
+    success: "{prefix}Corlex yapılandırması ve dil dosyaları yeniden yüklendi."
+    no-permission: "{prefix}Corlex'i yeniden yükleme izniniz yok."
 
 landlex:
   claim-success: "{prefix}Bölge başarıyla alındı!"

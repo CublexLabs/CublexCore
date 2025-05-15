@@ -18,3 +18,8 @@ Player to player teleport, player to location teleport
 
 Wide Announce -> Game + Discord 
 
+Commands
+
+Tab completion
+Feedback in console too
+Use arguments for permission error message. Interaction or command error

@@ -1,5 +1,6 @@
 package com.DevBD1.corlex.lang;
 
+import com.DevBD1.corlex.utils.Config;
 import com.DevBD1.corlex.utils.PlaceholderUtil;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -26,10 +27,17 @@ public class Lang {
 
     public static String t(Player player, String key, Map<String, String> dynamic) {
         dynamic = new HashMap<>(dynamic);
-        dynamic.putIfAbsent("player", player.getName());
-        dynamic.putIfAbsent("world", player.getWorld().getName());
 
-        return t(key, getLocale(player), dynamic);
+        if (player != null) {
+            dynamic.putIfAbsent("player", player.getName());
+            dynamic.putIfAbsent("world", player.getWorld().getName());
+        } else {
+            dynamic.putIfAbsent("player", "Console");
+            dynamic.putIfAbsent("world", "Console");
+        }
+
+        String locale = (player != null) ? getLocale(player) : "en";
+        return t(key, locale, dynamic);
     }
 
     public static String t(String key, String locale, Map<String, String> dynamic) {
@@ -56,6 +64,8 @@ public class Lang {
         }
 
         Map<String, String> staticPlaceholders = flatten(lang);
+        staticPlaceholders.putAll(Config.getAllAsPlaceholders());
+
         System.out.println("[DEBUG] Static placeholders: " + staticPlaceholders);
         System.out.println("[DEBUG] Dynamic placeholders: " + dynamic);
 

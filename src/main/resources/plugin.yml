@@ -9,3 +9,11 @@ website: https://cublex.net
 commands:
   testlang:
     description: Test localization messages
+  corlex:
+    description: Corlex admin command
+    usage: /corlex reload
+    permission: corlex.admin
+permissions:
+  corlex.admin:
+    description: Allows Corlex admin commands
+    default: op

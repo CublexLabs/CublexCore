@@ -1,8 +1,5 @@
 # lang/en.yml
 
-meta:
-  prefix: "&6[Corlex] &f"
-
 error:
   no-permission: "{prefix}You don't have permission to do that."
   player-only: "{prefix}This command can only be used by players."
@@ -10,6 +7,10 @@ error:
 corlex:
   welcome: "{prefix}Welcome, {player}! You are in {world}."
   status: "{prefix}You have {coins} coins and your rank is {rank}."
+  reload:
+    success: "{prefix}Corlex config and language files reloaded."
+    no-permission: "{prefix}You don't have permission to reload Corlex."
+
 
 landlex:
   claim-success: "{prefix}Land claimed successfully!"
