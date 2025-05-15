@@ -15,8 +15,13 @@ public class Config {
     }
 
     public static String get(String key) {
-        return config.getString(key);
+        String value = config.getString(key);
+        if (value == null) {
+            CorlexLogger.log("Missing config key: '" + key + "'");
+        }
+        return value;
     }
+
 
     public static Map<String, String> getAllAsPlaceholders() {
         Map<String, String> map = new HashMap<>();

@@ -4,6 +4,7 @@ import com.DevBD1.corlex.cmds.CorlexCommand;
 import com.DevBD1.corlex.lang.Lang;
 import com.DevBD1.corlex.cmds.TestLangCommand;
 import com.DevBD1.corlex.utils.Config;
+import com.DevBD1.corlex.utils.CorlexLogger;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -18,7 +19,7 @@ public final class Main extends JavaPlugin {
 
         Config.load(this);
         Lang.load(this);
-
+        CorlexLogger.init(this);
 
         PluginCommand cmd = getCommand("corlex");
         if (cmd == null) {
