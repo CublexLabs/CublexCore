@@ -10,10 +10,10 @@ commands:
   testlang:
     description: Test localization messages
   corlex:
-    description: Corlex admin command
-    usage: /corlex reload
+    description: Corlex command
+    usage: /corlex <reload|lang>
     permission: corlex.admin
 permissions:
   corlex.admin:
-    description: Allows Corlex admin commands
+    description: Allows admin access to Corlex commands
     default: op

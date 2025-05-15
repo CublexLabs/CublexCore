@@ -19,20 +19,16 @@ public final class Main extends JavaPlugin {
         Config.load(this);
         Lang.load(this);
 
-        CorlexCommand corlexCommand = new CorlexCommand(this);
 
         PluginCommand cmd = getCommand("corlex");
         if (cmd == null) {
-            getLogger().severe("Failed to register /corlex command — check plugin.yml");
+            getLogger().severe("COMMAND '/corlex' NOT FOUND! Is it defined in plugin.yml?");
             getServer().getPluginManager().disablePlugin(this);
             return;
         }
-        cmd.setExecutor(new CorlexCommand(this));
-        cmd.setTabCompleter(new CorlexCommand(this));
-        //if (cmd != null) {
-        //    cmd.setExecutor(corlexCommand);
-        //    cmd.setTabCompleter(corlexCommand);
-        //}
+        CorlexCommand corlexCommand = new CorlexCommand(this);
+        cmd.setExecutor(corlexCommand);
+        cmd.setTabCompleter(corlexCommand);
 
         getCommand("testlang").setExecutor(new TestLangCommand());
 

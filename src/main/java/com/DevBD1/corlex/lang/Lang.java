@@ -14,7 +14,9 @@ public class Lang {
 
 
     public static void load(JavaPlugin plugin) {
+        translations.clear();
         LocaleLoader.loadTranslations(plugin, translations);
+
     }
 
     public static LangMessage forPlayer(Player player) {

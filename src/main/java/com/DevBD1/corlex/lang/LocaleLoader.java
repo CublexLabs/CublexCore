@@ -4,6 +4,7 @@ import org.bukkit.configuration.MemorySection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.Plugin;
 
+import java.io.File;
 import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
@@ -14,9 +15,13 @@ public class LocaleLoader {
 
         for (String lang : supported) {
             try {
-                YamlConfiguration config = YamlConfiguration.loadConfiguration(
-                        new InputStreamReader(plugin.getResource("lang/" + lang + ".yml"))
-                );
+                File file = new File(plugin.getDataFolder(), "lang/" + lang + ".yml");
+                if (!file.exists()) {
+                    plugin.getLogger().warning("Missing language file: " + file.getName());
+                    continue;
+                }
+                YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
+
 
                 Map<String, Object> raw = config.getValues(false);
                 Map<String, Object> deep = deepCast(raw);
