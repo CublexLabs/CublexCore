@@ -1,4 +1,6 @@
 # lang/en.yml
+test:
+  rainbow: "<gradient:#ff0000:#00ffff>Corlex</gradient> is here!"
 
 error:
   no-permission: "{prefix}You don't have permission to do that."
@@ -10,7 +12,6 @@ corlex:
   reload:
     success: "{prefix}Corlex config and language files reloaded."
     no-permission: "{prefix}You don't have permission to reload Corlex."
-
 
 landlex:
   claim-success: "{prefix}Land claimed successfully!"

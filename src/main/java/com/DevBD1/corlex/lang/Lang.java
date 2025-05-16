@@ -3,6 +3,7 @@ package com.DevBD1.corlex.lang;
 import com.DevBD1.corlex.utils.Config;
 import com.DevBD1.corlex.utils.CorlexLogger;
 import com.DevBD1.corlex.utils.PlaceholderUtil;
+import com.DevBD1.corlex.utils.ColorUtil;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -74,6 +75,7 @@ public class Lang {
         System.out.println("[DEBUG] Dynamic placeholders: " + dynamic);
 
         String result = PlaceholderUtil.applyPlaceholders(raw, staticPlaceholders, dynamic);
+        result = ColorUtil.applyColorFormatting(result);
         System.out.println("[DEBUG] Final result: " + result);
 
         return result;
