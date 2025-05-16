@@ -1,14 +1,19 @@
 package com.DevBD1.corlex;
 
 import com.DevBD1.corlex.cmds.CorlexCommand;
+import com.DevBD1.corlex.api.CorlexAPI;
 import com.DevBD1.corlex.lang.Lang;
 import com.DevBD1.corlex.cmds.TestLangCommand;
 import com.DevBD1.corlex.utils.Config;
 import com.DevBD1.corlex.utils.CorlexLogger;
 import org.bukkit.command.PluginCommand;
+import org.bukkit.entity.Player;
+import org.bukkit.plugin.ServicePriority;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public final class Main extends JavaPlugin {
+import java.util.Map;
+
+public class Main extends JavaPlugin implements CorlexAPI {
 
     @Override
     public void onEnable() {
@@ -37,11 +42,18 @@ public final class Main extends JavaPlugin {
 
         // Run test
         Lang.testNestedValue(); // Or Main.testNestedValue(), depending on where it's defined
+
+        getServer().getServicesManager().register(CorlexAPI.class, this, this, ServicePriority.Normal);
+        getLogger().info("Corlex API registered.");
     }
 
     @Override
     public void onDisable() {
-        // Plugin shutdown logic
+        getServer().getServicesManager().unregister(CorlexAPI.class, this);
     }
 
+    @Override
+    public String translate(Player player, String key, Map<String, String> dynamic) {
+        return Lang.t(player, key, dynamic);
+    }
 }
