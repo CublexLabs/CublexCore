@@ -1,11 +1,15 @@
 package com.DevBD1.corlex;
 
-import com.DevBD1.corlex.cmds.CorlexCommand;
+import com.DevBD1.corlex.command.CommandManager;
+import com.DevBD1.corlex.command.sub.HelpSubCommand;
+import com.DevBD1.corlex.command.sub.TestLocalization;
+import com.DevBD1.corlex.command.sub.ReloadCommand;
+
 import com.DevBD1.corlex.api.CorlexAPI;
 import com.DevBD1.corlex.lang.Lang;
-import com.DevBD1.corlex.cmds.TestLangCommand;
-import com.DevBD1.corlex.utils.Config;
-import com.DevBD1.corlex.utils.CorlexLogger;
+import com.DevBD1.corlex.util.Config;
+import com.DevBD1.corlex.util.Logger;
+
 import org.bukkit.command.PluginCommand;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.ServicePriority;
@@ -24,7 +28,7 @@ public class Main extends JavaPlugin implements CorlexAPI {
 
         Config.load(this);
         Lang.load(this);
-        CorlexLogger.init(this);
+        Logger.init(this);
 
         PluginCommand cmd = getCommand("corlex");
         if (cmd == null) {
@@ -32,11 +36,14 @@ public class Main extends JavaPlugin implements CorlexAPI {
             getServer().getPluginManager().disablePlugin(this);
             return;
         }
-        CorlexCommand corlexCommand = new CorlexCommand(this);
-        cmd.setExecutor(corlexCommand);
-        cmd.setTabCompleter(corlexCommand);
 
-        getCommand("testlang").setExecutor(new TestLangCommand());
+        CommandManager manager = new CommandManager();
+        manager.register(new ReloadCommand(this));
+        manager.register(new TestLocalization());
+        manager.register(new HelpSubCommand(manager));
+
+        cmd.setExecutor(manager);
+        cmd.setTabCompleter(manager);
 
         getLogger().info("Corlex loaded with localization support.");
 

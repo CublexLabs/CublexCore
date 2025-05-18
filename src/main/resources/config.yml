@@ -1,11 +1,26 @@
+# Enable/Disable logging (universal)
 logging-enabled: true
 
-# {prefix} to be used in the language files
-prefix: "&6[Corlex] &f"
-
-# {server-name}
+# Variables to be used in the language files
+prefix: "#ffc13b[Corlex] &r"
+test-prefix: "&6[TEST] &r"
 server-name: "Cublex"
+discord: "https://discord.gg/cublex" # Chat and announcements but inactive in Turkey
+telegram: "https://t.me/mcublex" # Announcements and replies
+mobile-app: "" # In-app purchases and spending shop
 
-# {discord}, {telegram} etc.
-discord: "https://discord.gg/cublex"
-telegram: "https://t.me/mcublex"
+# GUI module
+gui:
+  titles:
+    players: "&aOnline Players"
+
+  close-button:
+    material: BARRIER
+    name: "&cClose"
+    slot: 49
+
+  border:
+    enabled: true
+    material: GRAY_STAINED_GLASS_PANE
+    name: " "
+    slots: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 17, 18, 26, 27, 35, 36, 44, 45, 46, 47, 48, 50, 51, 52, 53]

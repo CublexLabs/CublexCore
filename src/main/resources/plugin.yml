@@ -1,5 +1,5 @@
 name: Corlex
-version: '1.0-SNAPSHOT'
+version: '1.0.0'
 main: com.DevBD1.corlex.Main
 api-version: '1.21'
 load: STARTUP
@@ -7,11 +7,9 @@ authors: [ DevBD1 ]
 description: Spigot development library, built for the latest version.
 website: https://cublex.net
 commands:
-  testlang:
-    description: Test localization messages
   corlex:
     description: Corlex command
-    usage: /corlex <reload|lang>
+    usage: /corlex <reload|test>
     permission: corlex.admin
 permissions:
   corlex.admin:

@@ -1,7 +1,6 @@
 package com.DevBD1.corlex.lang;
 
-import com.DevBD1.corlex.utils.PlaceholderUtil;
-import com.DevBD1.corlex.utils.LocaleUtil;
+import com.DevBD1.corlex.util.LocaleUtil;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 

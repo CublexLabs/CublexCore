@@ -1,4 +1,4 @@
-package com.DevBD1.corlex.utils;
+package com.DevBD1.corlex.util;
 
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -21,7 +21,7 @@ public class Config {
     public static String get(String key) {
         String value = config.getString(key);
         if (value == null) {
-            CorlexLogger.log("Missing config key: '" + key + "'");
+            Logger.log("Missing config key: '" + key + "'");
         }
         return value;
     }

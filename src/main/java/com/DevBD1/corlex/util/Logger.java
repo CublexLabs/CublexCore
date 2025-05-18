@@ -1,4 +1,4 @@
-package com.DevBD1.corlex.utils;
+package com.DevBD1.corlex.util;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class CorlexLogger {
+public class Logger {
 
     private static File logDir;
     private static String pluginName;

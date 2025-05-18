@@ -1,9 +1,9 @@
 package com.DevBD1.corlex.lang;
 
-import com.DevBD1.corlex.utils.Config;
-import com.DevBD1.corlex.utils.CorlexLogger;
-import com.DevBD1.corlex.utils.PlaceholderUtil;
-import com.DevBD1.corlex.utils.ColorUtil;
+import com.DevBD1.corlex.util.Config;
+import com.DevBD1.corlex.util.Logger;
+import com.DevBD1.corlex.util.PlaceholderUtil;
+import com.DevBD1.corlex.util.ColorUtil;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -56,7 +56,7 @@ public class Lang {
         System.out.println("[DEBUG] Raw value from getNestedValue(): " + raw);
 
         if (raw == null) {
-            CorlexLogger.log("Missing key '" + key + "' in locale '" + locale + "', falling back to 'en'");
+            Logger.log("Missing key '" + key + "' in locale '" + locale + "', falling back to 'en'");
             lang = translations.get(DEFAULT_LANG);
             System.out.println("[DEBUG] Fallback to default locale: " + DEFAULT_LANG);
             raw = getNestedValue(lang, key);

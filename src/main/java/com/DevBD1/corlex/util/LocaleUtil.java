@@ -1,4 +1,4 @@
-package com.DevBD1.corlex.utils;
+package com.DevBD1.corlex.util;
 
 import org.bukkit.entity.Player;
 
