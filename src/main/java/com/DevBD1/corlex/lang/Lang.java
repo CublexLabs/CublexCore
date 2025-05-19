@@ -95,7 +95,7 @@ public class Lang {
     }
 
     // Supports dot notation: "corlex.welcome" resolves to nested value in the map
-    private static String getNestedValue(Map<String, ?> map, String path) {
+    public static String getNestedValue(Map<String, ?> map, String path) {
         String[] parts = path.split("\\.");
         Object current = map;
 

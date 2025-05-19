@@ -33,6 +33,8 @@ public class ReloadCommand implements SubCommand {
         Config.load(plugin);
         Lang.load(plugin);
 
+        Config.printStatusToConsole();
+
         sender.sendMessage("§aCorlex reloaded.");
         Bukkit.getLogger().info("[Corlex] Reloaded by " + sender.getName());
         return true;
