@@ -26,3 +26,7 @@ Auto-suggest when the user types an invalid subcommand
 4- if 5, 4 or 2 lines ERROR
 5- if 3 lines, have option to have border or not. single page or multi page. slots 23, 22, 21 are buttons.
 6- if single line and single page, no border, all 9 slots are custom
+
+What can you do about folder-level README templates or documentation boilerplate?
+
+force-default-language: boolean
