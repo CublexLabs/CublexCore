@@ -27,9 +27,16 @@ api.send(player, "corlex.welcome", Map.of("world", "Wilderness"));
 ## 🔧 Config Example
 
 ```yaml
+# Enable/Disable logging (universal)
 default-language: en
 logging-enabled: true
 server-name: Cublex
+
+# Variables to be used in the language files
+prefix: "#ffc13b[Corlex] &r"
+test-prefix: "&6[TEST] &r"
+discord: "https://discord.gg/cublex" # Chat and announcements but inactive in Turkey
+telegram: "https://t.me/mcublex" # Announcements and replies
 ```
 
 ---
