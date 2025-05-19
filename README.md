@@ -21,7 +21,11 @@ Corlex is a robust and extensible API plugin designed to serve as the shared cor
 CorlexAPI api = Bukkit.getServicesManager().load(CorlexAPI.class);
 api.send(player, "corlex.welcome", Map.of("world", "Wilderness"));
 ```
-
+Because corlex.welcome has {prefix}, {player} and {world} placeholders. First 2 is filled by the program, and the last one given by the call.
+```
+corlex:
+  welcome: "{prefix}Welcome, {player}! You are in {world}."
+```
 ---
 
 ## 🔧 Config Example
