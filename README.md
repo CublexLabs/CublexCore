@@ -2,17 +2,16 @@
 
 **The Modular API Foundation for Your Minecraft Plugin Ecosystem**
 
-Corlex is a robust and extensible API plugin designed to serve as the shared core for your Minecraft plugin suite. It centralizes localization, logging, command handling, and more — enabling other plugins to integrate seamlessly.
+Corlex is a robust and extensible API plugin designed to serve as the shared core for your Minecraft plugin suite. It centralizes localization, logging, and more — enabling other plugins to integrate seamlessly.
 
 ---
 
 ## ✨ Features
 
 - 🌍 **Localization**: Supports YAML-based i18n with `{placeholders}`
-- 🧩 **Plugin API**: `CorlexAPI` for messaging, config, and localization
 - 🖥️ **Command System**: Modular subcommands via `/corlex`
 - 🧾 **Logging**: Missing keys, fallback events, and in-game log viewing
-- 🧱 **Shared Config**: Defaults, server name, and more in `config.yml`
+- 🧱 **Config**: Defaults, server name, and more in `config.yml`
 
 ---
 
@@ -20,7 +19,7 @@ Corlex is a robust and extensible API plugin designed to serve as the shared cor
 
 ```java
 CorlexAPI api = Bukkit.getServicesManager().load(CorlexAPI.class);
-api.send(player, "landlex.claim.success", Map.of("region", "Spawn Zone"));
+api.send(player, "corlex.welcome", Map.of("world", "Wilderness"));
 ```
 
 ---
