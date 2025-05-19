@@ -1,7 +1,8 @@
 # Corlex
 
-**The Modular API Foundation for Your Minecraft Plugin Ecosystem**
+![corlex_foundation_api_banner](https://github.com/user-attachments/assets/cb8eb205-6922-4181-b8ea-735c47c9341d)
 
+**The Modular API Foundation for Your Minecraft Plugin Ecosystem**
 Corlex is a robust and extensible API plugin designed to serve as the shared core for your Minecraft plugin suite. It centralizes localization, logging, and more — enabling other plugins to integrate seamlessly.
 
 ---
