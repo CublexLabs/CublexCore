@@ -3,11 +3,13 @@ package com.DevBD1.corlex;
 import com.DevBD1.corlex.api.CorlexAPI;
 import com.DevBD1.corlex.api.CorlexAPIImpl;
 import com.DevBD1.corlex.api.CorlexAPIProvider;
+import com.DevBD1.corlex.api.lore.ClientSideLoreService;
 import com.DevBD1.corlex.command.CommandManager;
 import com.DevBD1.corlex.command.sub.HelpSubCommand;
 import com.DevBD1.corlex.command.sub.ReloadCommand;
 import com.DevBD1.corlex.command.sub.TestLocalization;
 import com.DevBD1.corlex.lang.Lang;
+import com.DevBD1.corlex.lore.ClientSideLoreAdapter;
 import com.DevBD1.corlex.util.Config;
 import com.DevBD1.corlex.util.Logger;
 
@@ -30,6 +32,11 @@ public class Main extends JavaPlugin {
         Lang.load(this);
         Logger.init(this);
 
+        //new ClientSideLoreAdapter(this).register();
+
+        ClientSideLoreAdapter adapter = new ClientSideLoreAdapter(this);
+        adapter.register();
+
         Config.printStatusToConsole();
 
         PluginCommand cmd = getCommand("corlex");
@@ -50,12 +57,21 @@ public class Main extends JavaPlugin {
         getLogger().info("Corlex loaded with localization support.");
         Lang.testNestedValue();
 
+
+
         // Register API instance
         this.api = new CorlexAPIImpl();
         Bukkit.getServicesManager().register(CorlexAPI.class, api, this, ServicePriority.Normal);
         CorlexAPIProvider.register(api);
 
         getLogger().info("Corlex API registered.");
+
+        getServer().getServicesManager().register(
+                ClientSideLoreService.class,
+                new ClientSideLoreAdapter(this),
+                this,
+                ServicePriority.Normal
+        );
     }
 
     @Override
