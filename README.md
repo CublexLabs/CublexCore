@@ -7,7 +7,7 @@ Corlex is a robust and extensible API plugin designed to serve as the shared cor
 
 ---
 
-## ✨ Features
+## ✨ 🧪 Features
 
 - 🌍 **Localization**: Supports YAML-based i18n with `{placeholders}`
 - 🖥️ **Command System**: Modular subcommands via `/corlex`
