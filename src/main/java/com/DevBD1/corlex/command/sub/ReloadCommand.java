@@ -40,6 +40,7 @@ public class ReloadCommand implements SubCommand {
         return true;
     }
 
+
     @Override
     public List<String> tabComplete(CommandSender sender, String[] args) {
         return List.of();

@@ -3,6 +3,7 @@ package com.DevBD1.corlex;
 import com.DevBD1.corlex.api.CorlexAPI;
 import com.DevBD1.corlex.api.CorlexAPIImpl;
 import com.DevBD1.corlex.api.CorlexAPIProvider;
+import com.DevBD1.corlex.api.SeasonListener;
 import com.DevBD1.corlex.api.lore.ClientSideLoreService;
 import com.DevBD1.corlex.command.CommandManager;
 import com.DevBD1.corlex.command.sub.HelpSubCommand;
@@ -47,6 +48,7 @@ public class Main extends JavaPlugin {
         }
 
         CommandManager manager = new CommandManager();
+
         manager.register(new ReloadCommand(this));
         manager.register(new TestLocalization());
         manager.register(new HelpSubCommand(manager));
@@ -64,6 +66,7 @@ public class Main extends JavaPlugin {
         Bukkit.getServicesManager().register(CorlexAPI.class, api, this, ServicePriority.Normal);
         CorlexAPIProvider.register(api);
 
+
         getLogger().info("Corlex API registered.");
 
         getServer().getServicesManager().register(
@@ -72,6 +75,13 @@ public class Main extends JavaPlugin {
                 this,
                 ServicePriority.Normal
         );
+
+        // RealisticSeasons Integration
+        if (Bukkit.getPluginManager().getPlugin("RealisticSeasons") == null) {
+            getLogger().warning("RealisticSeasons not found. Disabling season integration.");
+            return;
+        }
+        getServer().getPluginManager().registerEvents(new SeasonListener(this), this);
     }
 
     @Override

@@ -50,8 +50,8 @@ public class Logger {
             while ((line = reader.readLine()) != null && count++ < maxLines) {
                 lines.add("§7" + line);
             }
-        } catch (IOException e) {
-            return List.of("§cError reading log: " + e.getMessage());
+        //} catch (IOException e) {
+        //    return List.of("§cError reading log: " + e.getMessage());
         }
 
         Collections.reverse(lines); // from oldest to newest

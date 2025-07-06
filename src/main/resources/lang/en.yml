@@ -16,3 +16,34 @@ corlex:
 landlex:
   claim-success: "{prefix}Land claimed successfully!"
   already-claimed: "{prefix}This area is already claimed."
+
+realisticseasons:
+  season:
+    now:
+      winter: "&3&lWinter &fhas &astarted&f!"
+      autumn: "&6&lFall &fhas &astarted&f!"
+      spring: "&d&lSpring &fhas &astarted&f!"
+      summer: "&e&lSummer &fhas &astarted&f!"
+    name:
+      winter: "&3&lWinter"
+      autumn: "&6&lFall"
+      spring: "&d&lSpring"
+      summer: "&e&lSummer"
+  no-permission: "&cYou don't have the permission to do that!"
+  seasons-disabled-in-this-world: "&cSeasons are disabled in this world"
+  world-is-restoring: "&cThis world is currently restoring!"
+  current-date: "&aCurrent date: &2%current_weekday%, %current_month% %current_day%, year %current_year%"
+  current-season: "&aCurrent season: &2%current_season%"
+  air-temperature: "&aCurrent air temperature: %air_temperature%"
+  until-next-season: "&aDays until next season (&2$1&a): &7$2"
+  until-next-event: "&aDays until next event (&2%next_event%&a): &7%days_until_next_event%"
+  current-time: "&aCurrent time: &2%time%"
+  active-events: "&aActive events: &2%events%"
+  toggle-colors: "&aSeason colors are now &2%status% &afor you"
+  temp-status: "&aThe temperature system is now &2%status% &afor you"
+  particles-status: "&aThe season particles are now &2%status% &afor you"
+  temp-fahrenheit: "&aYour temperature will now be displayed in &2Fahrenheit"
+  temp-celcius: "&aYour temperature will now be displayed in &2Celcius"
+  enabled-text: "enabled"
+  disabled-text: "disabled"
+  current-biome: "&aCurrent biome: %biome%"

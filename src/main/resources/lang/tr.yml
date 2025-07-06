@@ -14,3 +14,34 @@ corlex:
 landlex:
   claim-success: "{prefix}Bölge başarıyla alındı!"
   already-claimed: "{prefix}Bu bölge zaten alınmış."
+
+realisticseasons:
+  season:
+    now:
+      winter: "&3&lKış &fbaşladı&f!"
+      autumn: "&6&lSonbahar &fbaşladı&f!"
+      spring: "&d&lİlkbahar &fbaşladı&f!"
+      summer: "&e&lYaz &fbaşladı&f!"
+    name:
+      winter: "&3&lKış"
+      autumn: "&6&lSonbahar"
+      spring: "&d&lİlkbahar"
+      summer: "&e&lYaz"
+  no-permission: "&cBu işlemi yapma iznin yok!"
+  seasons-disabled-in-this-world: "&cBu dünyada mevsimler devre dışı"
+  world-is-restoring: "&cBu dünya şu anda geri yükleniyor!"
+  current-date: "&aBugünün tarihi: &2%current_weekday%, %current_month% %current_day%, yıl %current_year%"
+  current-season: "&aGeçerli mevsim: &2%current_season%"
+  air-temperature: "&aŞu anki hava sıcaklığı: %air_temperature%"
+  until-next-season: "&aSonraki mevsime kalan gün (&2$1&a): &7$2"
+  until-next-event: "&aSonraki etkinliğe kalan gün (&2%next_event%&a): &7%days_until_next_event%"
+  current-time: "&aŞu anki saat: &2%time%"
+  active-events: "&aAktif etkinlikler: &2%events%"
+  toggle-colors: "&aMevsim renkleri artık &2%status% &asenin için"
+  temp-status: "&aSıcaklık sistemi artık &2%status% &asenin için"
+  particles-status: "&aMevsim partikülleri artık &2%status% &asenin için"
+  temp-fahrenheit: "&aSıcaklık artık &2Fahrenheit &aolarak gösterilecek"
+  temp-celcius: "&aSıcaklık artık &2Celsius &aolarak gösterilecek"
+  enabled-text: "etkin"
+  disabled-text: "devre dışı"
+  current-biome: "&aGeçerli biyom: %biome%"

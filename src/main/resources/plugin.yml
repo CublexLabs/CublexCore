@@ -1,11 +1,13 @@
 name: Corlex
-version: '1.1.0'
+version: '1.2.6'
 main: com.DevBD1.corlex.Main
 api-version: '1.21'
 load: STARTUP
 authors: [ DevBD1 ]
 description: Spigot development library, built for the latest version.
 website: https://cublex.net
+softdepend:
+  - RealisticSeasons
 commands:
   corlex:
     description: Corlex command
