@@ -1,27 +1,29 @@
-# Enable/Disable logging (universal)
-default-language: en
-logging-enabled: true
-server-name: Cublex
+# Static variables. These cannot be changed during runtime. You must stop the server to make changes here
+server-name: cublex.net
+fallback-language: en # it is used when the player's client locale is not supported
+logging-enabled: true # enable/disable logging into a separate file under /plugins/Corlex folder (universal)
+restful-enabled: false # enable/disable REST API on your server. Check https://dev.cublex.net/wiki/corlex/rest
+debug-mode: false # enable/disable DEBUG mode
 
-# Variables to be used in the language files
+# Variables that are used in the localization strings
 prefix: "#ffc13b[Corlex] &r"
-test-prefix: "&6[TEST] &r"
-discord: "https://discord.gg/cublex" # Chat and announcements but inactive in Turkey
+test-prefix: "&c[Corlex] &r"
+discord: "https://discord.gg/cublex" # Chat and announcements
 telegram: "https://t.me/mcublex" # Announcements and replies
 mobile-app: "" # In-app purchases and spending shop
 
-# GUI module
+# Settings for the GUI module
 gui:
   titles:
     players: "&aOnline Players"
-
   close-button:
     material: BARRIER
     name: "&cClose"
     slot: 49
-
   border:
     enabled: true
     material: GRAY_STAINED_GLASS_PANE
     name: " "
     slots: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 17, 18, 26, 27, 35, 36, 44, 45, 46, 47, 48, 50, 51, 52, 53]
+
+# Settings for RealisticSeasons hook

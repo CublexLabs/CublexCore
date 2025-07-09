@@ -4,7 +4,6 @@ plugins {
 }
 
 group = 'com.DevBD1'
-version = '1.2.6'
 
 repositories {
     mavenCentral()
@@ -29,8 +28,9 @@ dependencies {
     compileOnly("io.papermc.paper:paper-api:1.21.5-R0.1-SNAPSHOT")
     compileOnly "com.comphenix.protocol:ProtocolLib:5.1.0"
     implementation "commons-io:commons-io:2.15.1"
-    implementation("de.tr7zw:item-nbt-api:2.15.0")
+    implementation("de.tr7zw:item-nbt-api:2.15.1")
     compileOnly files('libs/RealisticSeasons-11.8.1.jar')
+    compileOnly "me.clip:placeholderapi:2.11.2"
 }
 
 tasks {
@@ -80,6 +80,7 @@ processResources {
     inputs.properties props
     filteringCharset 'UTF-8'
     filesMatching('plugin.yml') {
+        expand(version: project.version)
         expand props
     }
 }
@@ -88,4 +89,45 @@ tasks.register("printJdk") {
     doLast {
         println "Running with: " + System.getProperty("java.version")
     }
+}
+
+// Version bump logic
+def versionFile = file("version.txt")
+if (versionFile.exists()) {
+    version = versionFile.text.trim()
+} else {
+    versionFile.text = version
+    println "version.txt not found, created with version: $version"
+}
+
+tasks.register("bumpVersion") {
+    doLast {
+        if (!versionFile.exists()) {
+            throw new GradleException("version.txt not found.")
+        }
+
+        def currentVersion = versionFile.text.trim()
+        def releaseType = project.hasProperty("releaseType") ? project.releaseType : "patch"
+
+        def (major, minor, patch) = currentVersion.tokenize('.').collect { it.toInteger() }
+
+        switch (releaseType) {
+            case "major":
+                major++; minor = 0; patch = 0; break
+            case "minor":
+                minor++; patch = 0; break
+            case "patch":
+                patch++; break
+            default:
+                throw new GradleException("Unknown releaseType: $releaseType. Use major, minor or patch.")
+        }
+
+        def newVersion = "${major}.${minor}.${patch}"
+        versionFile.text = newVersion
+        println "🔁 Version bumped: $currentVersion → $newVersion"
+    }
+}
+
+tasks.register("bumpAndBuild") {
+    dependsOn "bumpVersion", "build"
 }

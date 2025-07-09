@@ -1,44 +1,47 @@
 package com.DevBD1.corlex;
 
-import com.DevBD1.corlex.api.CorlexAPI;
-import com.DevBD1.corlex.api.CorlexAPIImpl;
-import com.DevBD1.corlex.api.CorlexAPIProvider;
-import com.DevBD1.corlex.api.SeasonListener;
-import com.DevBD1.corlex.api.lore.ClientSideLoreService;
-import com.DevBD1.corlex.command.CommandManager;
-import com.DevBD1.corlex.command.sub.HelpSubCommand;
-import com.DevBD1.corlex.command.sub.ReloadCommand;
-import com.DevBD1.corlex.command.sub.TestLocalization;
-import com.DevBD1.corlex.lang.Lang;
-import com.DevBD1.corlex.lore.ClientSideLoreAdapter;
-import com.DevBD1.corlex.util.Config;
-import com.DevBD1.corlex.util.Logger;
+import com.DevBD1.corlex.commands.CommandManager;
+import com.DevBD1.corlex.commands.sub.HelpSubCommand;
+import com.DevBD1.corlex.commands.sub.ReloadCommand;
+import com.DevBD1.corlex.commands.sub.TestLocalization;
+import com.DevBD1.corlex.hooks.RealisticSeasons.Listener;
+import com.DevBD1.corlex.hooks.CubItems.ClientSideTextAdapter;
+import com.DevBD1.corlex.modules.lang.Lang;
+import com.DevBD1.corlex.modules.lore.ClientSideLoreAdapter;
+import com.DevBD1.corlex.utilities.ConfigManager;
+import com.DevBD1.corlex.utilities.LoggingManager;
+import com.DevBD1.corlex.services.CorlexAPI;
+import com.DevBD1.corlex.services.CorlexAPIImpl;
+import com.DevBD1.corlex.services.ClientSideLoreService;
 
+import com.DevBD1.corlex.utilities.ServiceRegistrar;
 import org.bukkit.Bukkit;
 import org.bukkit.command.PluginCommand;
-import org.bukkit.plugin.ServicePriority;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class Main extends JavaPlugin {
 
     private CorlexAPI api;
+    private LoggingManager loggingManager;
 
     @Override
     public void onEnable() {
+        this.api            = new CorlexAPIImpl();
+        this.loggingManager = new LoggingManager(this);
+        ClientSideLoreService loreService = new ClientSideLoreAdapter(this);
+        ServiceRegistrar.registerAll(this, api, loreService, loggingManager);
+
         saveDefaultConfig();
         saveResource("lang/en.yml", false);
         saveResource("lang/tr.yml", false);
 
-        Config.load(this);
+        ConfigManager.load(this);
         Lang.load(this);
-        Logger.init(this);
 
-        //new ClientSideLoreAdapter(this).register();
+        this.loggingManager = new LoggingManager(this);
+        loggingManager.log("Plugin başlatıldı");
 
-        ClientSideLoreAdapter adapter = new ClientSideLoreAdapter(this);
-        adapter.register();
-
-        Config.printStatusToConsole();
+        ConfigManager.printStatusToConsole();
 
         PluginCommand cmd = getCommand("corlex");
         if (cmd == null) {
@@ -58,34 +61,25 @@ public class Main extends JavaPlugin {
 
         getLogger().info("Corlex loaded with localization support.");
         Lang.testNestedValue();
-
-
-
-        // Register API instance
-        this.api = new CorlexAPIImpl();
-        Bukkit.getServicesManager().register(CorlexAPI.class, api, this, ServicePriority.Normal);
-        CorlexAPIProvider.register(api);
-
-
-        getLogger().info("Corlex API registered.");
-
-        getServer().getServicesManager().register(
-                ClientSideLoreService.class,
-                new ClientSideLoreAdapter(this),
-                this,
-                ServicePriority.Normal
-        );
+        // Native Translation Module
+        new ClientSideTextAdapter(this).register(this);
 
         // RealisticSeasons Integration
         if (Bukkit.getPluginManager().getPlugin("RealisticSeasons") == null) {
             getLogger().warning("RealisticSeasons not found. Disabling season integration.");
             return;
         }
-        getServer().getPluginManager().registerEvents(new SeasonListener(this), this);
+
+        getServer().getPluginManager().registerEvents(new Listener(this), this);
+
     }
 
     @Override
     public void onDisable() {
         Bukkit.getServicesManager().unregister(CorlexAPI.class);
+    }
+
+    public LoggingManager getLoggingManager() {
+        return this.loggingManager;
     }
 }
