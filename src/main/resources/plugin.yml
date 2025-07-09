@@ -1,6 +1,6 @@
 name: Corlex
 version: ${version}
-main: com.DevBD1.corlex.Main
+main: io.github.devbd1.corlex.Main
 api-version: '1.21'
 load: STARTUP
 authors: [ DevBD1 ]

@@ -3,7 +3,7 @@ plugins {
     id("xyz.jpenilla.run-paper") version "2.3.1"
 }
 
-group = 'com.DevBD1'
+group = 'io.github.devbd1'
 
 repositories {
     mavenCentral()
