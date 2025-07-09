@@ -1,5 +1,6 @@
 package com.DevBD1.corlex.modules.lang;
 
+import me.clip.placeholderapi.PlaceholderAPI;
 import com.DevBD1.corlex.utilities.ConfigManager;
 import com.DevBD1.corlex.utilities.LoggingManager;
 import com.DevBD1.corlex.utilities.PlaceholderManager;

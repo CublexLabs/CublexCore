@@ -11,8 +11,7 @@ public class PlaceholderManager {
     public String applyPlaceholders(Player player, String input, Map<String, String> staticPlaceholders, Map<String, String> dynamicPlaceholders) {
         if (input == null) return "";
 
-        RegisteredServiceProvider<LoggingManager> reg =
-                Bukkit.getServicesManager().getRegistration(LoggingManager.class);
+        RegisteredServiceProvider<LoggingManager> reg = Bukkit.getServicesManager().getRegistration(LoggingManager.class);
         if (reg != null) {
             LoggingManager lm = reg.getProvider();
             lm.log("[DEBUG] PlaceholderManager input: " + input);
@@ -31,7 +30,9 @@ public class PlaceholderManager {
         }
 
         if (ConfigManager.getKeyValue("debug-mode", Boolean.class, false) == true) {
-            System.out.println("[DEBUG] Final resolved message: " + input);
+            if (reg != null) {
+                LoggingManager lm = reg.getProvider();
+            lm.log("[DEBUG] Final resolved message: " + input);
             return input;
         }
     }
