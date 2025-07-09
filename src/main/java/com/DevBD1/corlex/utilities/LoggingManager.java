@@ -1,7 +1,5 @@
 package com.DevBD1.corlex.utilities;
 
-import org.bukkit.plugin.java.JavaPlugin;
-
 import java.io.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -12,6 +10,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 public class LoggingManager {
 
     private final String pluginName;
+    private final File dataFolder;
     private final File logDir;
     private final DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     private final DateTimeFormatter timestampFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
@@ -21,13 +20,19 @@ public class LoggingManager {
     private volatile boolean loggingEnabled;
     private volatile boolean debugMode;
 
-    public LoggingManager(JavaPlugin plugin) {
-        this.pluginName     = plugin.getName();
-        this.logDir         = new File(plugin.getDataFolder(), "logs");
-        if (!logDir.exists()) logDir.mkdirs();
+    public LoggingManager(String pluginName) {
+        this.pluginName = pluginName;
+        this.dataFolder = new File("plugins", pluginName);
+        if (!dataFolder.exists()) {
+            dataFolder.mkdirs();
+        }
+        this.logDir = new File(dataFolder, "logs");
+        if (!logDir.exists()) {
+            logDir.mkdirs();
+        }
 
         this.loggingEnabled = ConfigManager.getKeyValue("logging-enabled", Boolean.class, false);
-        this.debugMode      = ConfigManager.getKeyValue("debug-mode", Boolean.class, false);
+        this.debugMode = ConfigManager.getKeyValue("debug-mode", Boolean.class, false);
 
         writerThread = new Thread(this::processQueue, pluginName + "-LogWriter");
         writerThread.setDaemon(true);
@@ -52,7 +57,7 @@ public class LoggingManager {
                 String msg = queue.take();
                 LocalDateTime now = LocalDateTime.now();
                 String timestamp = now.format(timestampFormat);
-                String date      = now.toLocalDate().format(dateFormat);
+                String date = now.toLocalDate().format(dateFormat);
 
                 File logFile = new File(logDir,
                         pluginName.toLowerCase(Locale.ROOT) + "-" + date + ".log");

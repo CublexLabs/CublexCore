@@ -1,39 +1,57 @@
 package com.DevBD1.corlex.utilities;
 
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.RegisteredServiceProvider;
-
 import java.util.Map;
 
 public class PlaceholderManager {
 
-    public String applyPlaceholders(Player player, String input, Map<String, String> staticPlaceholders, Map<String, String> dynamicPlaceholders) {
-        if (input == null) return "";
+    private final LoggingManager logger;
 
-        RegisteredServiceProvider<LoggingManager> reg = Bukkit.getServicesManager().getRegistration(LoggingManager.class);
-        if (reg != null) {
-            LoggingManager lm = reg.getProvider();
-            lm.log("[DEBUG] PlaceholderManager input: " + input);
-            lm.log("[DEBUG] Static map: " + staticPlaceholders);
-            lm.log("[DEBUG] Dynamic map: " + dynamicPlaceholders);
+    /**
+     * Constructor accepts a LoggingManager instance for dependency injection.
+     */
+    public PlaceholderManager(LoggingManager logger) {
+        this.logger = logger;
+    }
+
+    /**
+     * Example method demonstrating usage of the injected logger.
+     */
+    public void doWork() {
+        logger.log("AService iş yaptı");
+    }
+
+    /**
+     * Applies placeholders to the input string and logs debug information if enabled.
+     */
+    public String applyPlaceholders(Player player,
+                                    String input,
+                                    Map<String, String> staticPlaceholders,
+                                    Map<String, String> dynamicPlaceholders) {
+        if (input == null) {
+            return "";
         }
 
-        // Apply static placeholders like {prefix}
+        // Debug logging
+        logger.log("[DEBUG] PlaceholderManager input: " + input);
+        logger.log("[DEBUG] Static map: " + staticPlaceholders);
+        logger.log("[DEBUG] Dynamic map: " + dynamicPlaceholders);
+
+        // Apply static placeholders
         for (Map.Entry<String, String> entry : staticPlaceholders.entrySet()) {
             input = input.replace("{" + entry.getKey() + "}", entry.getValue());
         }
 
-        // Apply dynamic placeholders like {coins}, {rank}, {player}
+        // Apply dynamic placeholders
         for (Map.Entry<String, String> entry : dynamicPlaceholders.entrySet()) {
             input = input.replace("{" + entry.getKey() + "}", entry.getValue());
         }
 
-        if (ConfigManager.getKeyValue("debug-mode", Boolean.class, false) == true) {
-            if (reg != null) {
-                LoggingManager lm = reg.getProvider();
-            lm.log("[DEBUG] Final resolved message: " + input);
-            return input;
+        // Final debug log
+        if (ConfigManager.getKeyValue("debug-mode", Boolean.class, false)) {
+            logger.log("[DEBUG] Final resolved message: " + input);
         }
+
+        return input;
     }
 }

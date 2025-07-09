@@ -1,3 +1,5 @@
+// This class gets and returns Player's Locale, and returns the Default Locale if it catches an error.
+// The check is in the list of supported locales in another program.
 package com.DevBD1.corlex.utilities;
 
 import org.bukkit.entity.Player;

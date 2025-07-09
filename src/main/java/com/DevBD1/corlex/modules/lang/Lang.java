@@ -8,7 +8,6 @@ import com.DevBD1.corlex.utilities.ColorManager;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
-import com.DevBD1.corlex.Main;
 
 import java.util.HashMap;
 import java.util.Map;
