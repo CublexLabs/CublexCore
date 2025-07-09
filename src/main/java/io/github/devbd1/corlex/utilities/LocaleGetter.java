@@ -1,5 +1,7 @@
-// This class gets and returns Player's Locale, and returns the Default Locale if it catches an error.
-// The check is in the list of supported locales in another program.
+/**
+ * This class gets and returns Player's Locale, and returns the Default Locale if it catches an error.
+ * The check is in the list of supported locales in another program.
+ */
 package io.github.devbd1.corlex.utilities;
 
 import org.bukkit.entity.Player;
@@ -16,6 +18,6 @@ public class LocaleGetter {
 
     public static String getDefaultLocale() {
 
-        return ConfigManager.getKeyValue("fallback-language", String.class, "en").toLowerCase();
+        return ConfigManager.getString("fallback-language", "en").toLowerCase();
     }
 }

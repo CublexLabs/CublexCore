@@ -78,7 +78,7 @@ public class Lang {
         System.out.println("[DEBUG] Static placeholders: " + staticPlaceholders);
         System.out.println("[DEBUG] Dynamic placeholders: " + dynamic);
 
-        String result = PlaceholderManager.applyPlaceholders(player, raw, staticPlaceholders, dynamic);
+        String result = PlaceholderManager.applyPlaceholders(raw, staticPlaceholders, dynamic);
         result = ColorManager.applyColorFormatting(result);
         System.out.println("[DEBUG] Final result: " + result);
 

@@ -5,7 +5,6 @@ import io.github.devbd1.corlex.listeners.LoreRefreshListener;
 import io.github.devbd1.corlex.utilities.LocaleGetter;
 import de.tr7zw.changeme.nbtapi.NBTItem;
 
-import io.github.devbd1.corlex.services.ClientSideLoreService;
 import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.ProtocolManager;
@@ -24,7 +23,7 @@ import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-public class ClientSideLoreAdapter implements ClientSideLoreService {
+public class ClientSideLoreAdapter {
 
     private final JavaPlugin plugin;
     private final ProtocolManager protocolManager;
@@ -101,10 +100,5 @@ public class ClientSideLoreAdapter implements ClientSideLoreService {
         meta.setLore(combined);
         item.setItemMeta(meta);
         return item;
-    }
-
-    @Override
-    public void setClientSideLore(ItemStack item, List<String> lore, Predicate<Player> condition) {
-        // your existing implementation
     }
 }

@@ -2,8 +2,11 @@ package io.github.devbd1.corlex.services;
 
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
+import java.util.List;
 import java.util.Map;
+import java.util.function.Predicate;
 
 public interface CorlexAPI {
 
@@ -55,4 +58,6 @@ public interface CorlexAPI {
     default String getVersion() {
         return "unknown";
     }
+
+//    void setClientSideLore(ItemStack item, List<String> lore, Predicate<Player> condition);
 }

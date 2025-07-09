@@ -30,10 +30,10 @@ public class ReloadCommand implements SubCommand {
     @Override
     public boolean execute(CommandSender sender, String[] args) {
         plugin.reloadConfig();
-        ConfigManager.load(plugin);
+        ConfigManager.init(plugin);
         Lang.load(plugin);
 
-        ConfigManager.printStatusToConsole();
+        ConfigManager.printStatus();
 
         sender.sendMessage("§aCorlex reloaded.");
         Bukkit.getLogger().info("[Corlex] Reloaded by " + sender.getName());

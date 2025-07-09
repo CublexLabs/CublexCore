@@ -23,7 +23,7 @@ public class ClientSideTextAdapter {
 
     public ClientSideTextAdapter(JavaPlugin plugin) {
         // Ensure Lang is initialized (if needed)
-        Lang.setup(plugin);
+//        Lang.setup(plugin);
         protocolManager = ProtocolLibrary.getProtocolManager();
     }
 
@@ -56,8 +56,8 @@ public class ClientSideTextAdapter {
                 while (matcher.find()) {
                     String key = matcher.group(1);
                     // Use Lang translator function, stripping prefix
-                    String translation = Lang.translate(key);
-                    matcher.appendReplacement(sb, "\"" + Matcher.quoteReplacement(translation) + "\"");
+//                    String translation = Lang.translate(key);
+//                    matcher.appendReplacement(sb, "\"" + Matcher.quoteReplacement(translation) + "\"");
                 }
                 matcher.appendTail(sb);
 
@@ -71,6 +71,6 @@ public class ClientSideTextAdapter {
      * Reloads Lang translations at runtime.
      */
     public void reload() {
-        Lang.reload();
+//        Lang.reload();
     }
 }
