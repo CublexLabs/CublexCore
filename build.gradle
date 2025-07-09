@@ -22,6 +22,9 @@ repositories {
         name = "CodeMC"
         url = uri("https://repo.codemc.io/repository/maven-public/")
     }
+    maven {
+        url = 'https://repo.extendedclip.com/releases/'
+    }
 }
 
 dependencies {
@@ -30,7 +33,7 @@ dependencies {
     implementation "commons-io:commons-io:2.15.1"
     implementation("de.tr7zw:item-nbt-api:2.15.1")
     compileOnly files('libs/RealisticSeasons-11.8.1.jar')
-    compileOnly "me.clip:placeholderapi:2.11.2"
+    compileOnly 'me.clip:placeholderapi:2.11.6'
 }
 
 tasks {

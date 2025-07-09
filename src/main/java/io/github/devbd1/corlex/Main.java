@@ -4,6 +4,7 @@ import io.github.devbd1.corlex.commands.CommandManager;
 import io.github.devbd1.corlex.commands.sub.HelpSubCommand;
 import io.github.devbd1.corlex.commands.sub.ReloadCommand;
 import io.github.devbd1.corlex.commands.sub.TestLocalization;
+import io.github.devbd1.corlex.hooks.PlaceholderAPI.PlaceholderApplier;
 import io.github.devbd1.corlex.hooks.RealisticSeasons.Listener;
 import io.github.devbd1.corlex.hooks.CubItems.ClientSideTextAdapter;
 import io.github.devbd1.corlex.modules.text.Lang;
@@ -24,8 +25,9 @@ import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class Main extends JavaPlugin {
+    private LoggingManager      logger;
     private CorlexAPI           api;
-    private LoggingManager      loggingManager;
+    private boolean placeholderApiEnabled;
 
     @Override
     public void onEnable() {
@@ -36,10 +38,17 @@ public class Main extends JavaPlugin {
         Lang.load(this);
         ConfigManager.printStatus();
 
-        this.loggingManager = new LoggingManager(this);
-        this.api            = new CorlexAPIImpl(this, loggingManager);
+        this.logger = new LoggingManager(this);
+        this.api            = new CorlexAPIImpl(this, logger);
+        ServiceRegistrar.registerAll(this, api, logger);
 
-        ServiceRegistrar.registerAll(this, api, loggingManager);
+        PlaceholderApplier.init(logger);
+        placeholderApiEnabled = Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI");
+        if (placeholderApiEnabled) {
+            logger.log("PlaceholderAPI found. Enabled integration.");
+        } else {
+            logger.log("PlaceholderAPI not found. PlaceholderAPI integration disabled.");
+        }
 
         PluginCommand cmd = getCommand("corlex");
         if (cmd == null) {
@@ -72,10 +81,10 @@ public class Main extends JavaPlugin {
     @Override
     public void onDisable() {
 
-        ServiceUnregistrar.unregisterAll(this, api, loggingManager);
+        ServiceUnregistrar.unregisterAll(this, api, logger);
     }
 
     public LoggingManager getLoggingManager() {
-        return this.loggingManager;
+        return this.logger;
     }
 }

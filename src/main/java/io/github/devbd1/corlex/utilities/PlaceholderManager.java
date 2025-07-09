@@ -1,5 +1,6 @@
 package io.github.devbd1.corlex.utilities;
 
+import io.github.devbd1.corlex.hooks.PlaceholderAPI.PlaceholderApplier;
 import org.bukkit.entity.Player;
 import java.util.Map;
 
@@ -37,15 +38,15 @@ public class PlaceholderManager {
         logger.log("Starting placeholder replacement: " + input);
 
         String result = input;
-        // first do the static placeholders
-        for (Map.Entry<String, String> e : staticPlaceholders.entrySet()) {
+        // Static placeholders
+        for (var e : staticPlaceholders.entrySet()) {
             result = result.replace("{" + e.getKey() + "}", e.getValue());
         }
-        // then the dynamic ones
-        for (Map.Entry<String, String> e : dynamicPlaceholders.entrySet()) {
+        // Dynamic placeholders
+        for (var e : dynamicPlaceholders.entrySet()) {
             result = result.replace("{" + e.getKey() + "}", e.getValue());
         }
-
+        result = PlaceholderApplier.apply(player, result);
         logger.log("Finished replacement, result: " + result);
         return result;
     }
