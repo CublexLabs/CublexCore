@@ -1,10 +1,9 @@
 package io.github.devbd1.corlex.modules.text;
 
-import me.clip.placeholderapi.PlaceholderAPI;
+import io.github.devbd1.corlex.utilities.ColorManager;
 import io.github.devbd1.corlex.utilities.ConfigManager;
 import io.github.devbd1.corlex.utilities.LoggingManager;
 import io.github.devbd1.corlex.utilities.PlaceholderManager;
-import io.github.devbd1.corlex.utilities.ColorManager;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -19,7 +18,6 @@ public class Lang {
     public static void load(JavaPlugin plugin) {
         translations.clear();
         LocaleLoader.loadTranslations(plugin, translations);
-
     }
 
     public static LangMessage forPlayer(Player player) {
@@ -41,53 +39,63 @@ public class Lang {
             dynamic.putIfAbsent("world", "Console");
         }
 
-        String locale = (player != null) ? getLocale(player) : "en";
-        return t(key, locale, dynamic);
+        String locale = (player != null) ? getLocale(player) : DEFAULT_LANG;
+        return translateForLocale(player, key, locale, dynamic);
     }
 
     public static String t(String key, String locale, Map<String, String> dynamic) {
-        LoggingManager lm = Bukkit.getServicesManager().load(LoggingManager.class);
-        lm.log("Missing key…");
+        // Delegate through the same pipeline with no Player context
+        return translateForLocale(null, key, locale, dynamic);
+    }
 
-        System.out.println("[DEBUG] --- Lang.t() called ---");
-        System.out.println("[DEBUG] Requested key: " + key);
-        System.out.println("[DEBUG] Requested locale: " + locale);
+    public static Map<String, Map<String, Object>> getTranslations() {
+        return translations;
+    }
+
+    private static String translateForLocale(Player player,
+                                             String key,
+                                             String locale,
+                                             Map<String, String> dynamic) {
+        LoggingManager logger = Bukkit.getServicesManager().load(LoggingManager.class);
+        logger.log("Translating key '" + key + "' for locale '" + locale + "'");
+
+        logger.log("[DEBUG] --- Lang.t() called ---");
+        logger.log("[DEBUG] Requested key: " + key);
+        logger.log("[DEBUG] Requested locale: " + locale);
 
         Map<String, Object> lang = translations.getOrDefault(locale, translations.get(DEFAULT_LANG));
-        System.out.println("[DEBUG] Using lang map for locale: " + locale + " -> " + lang);
+        logger.log("[DEBUG] Using lang map for locale: " + locale + " -> " + lang);
 
         String raw = getNestedValue(lang, key);
-        System.out.println("[DEBUG] Raw value from getNestedValue(): " + raw);
+        logger.log("[DEBUG] Raw value: " + raw);
 
         if (raw == null) {
-            lm.log("Missing key '" + key + "' in locale '" + locale + "', falling back to 'en'");
+            logger.log("Missing key '" + key + "' in locale '" + locale + "', falling back to '" + DEFAULT_LANG + "'");
             lang = translations.get(DEFAULT_LANG);
-            System.out.println("[DEBUG] Fallback to default locale: " + DEFAULT_LANG);
+            logger.log("[DEBUG] Fallback to default locale: " + DEFAULT_LANG);
             raw = getNestedValue(lang, key);
-            System.out.println("[DEBUG] Raw fallback value: " + raw);
+            logger.log("[DEBUG] Raw fallback value: " + raw);
         }
 
         if (raw == null) {
-            System.out.println("[DEBUG] Final fallback failed, returning key as raw string");
+            logger.log("[DEBUG] Final fallback failed, returning key");
             return key;
         }
 
         Map<String, String> staticPlaceholders = flatten(lang);
         staticPlaceholders.putAll(ConfigManager.getAllAsPlaceholders());
 
-        System.out.println("[DEBUG] Static placeholders: " + staticPlaceholders);
-        System.out.println("[DEBUG] Dynamic placeholders: " + dynamic);
+        logger.log("[DEBUG] Static placeholders: " + staticPlaceholders);
+        logger.log("[DEBUG] Dynamic placeholders: " + dynamic);
 
-        String result = PlaceholderManager.applyPlaceholders(raw, staticPlaceholders, dynamic);
+        // now use an instance of PlaceholderManager instead of a static call
+        PlaceholderManager ph = new PlaceholderManager(logger);
+        String result = ph.applyPlaceholders(player, raw, staticPlaceholders, dynamic);
+
         result = ColorManager.applyColorFormatting(result);
-        System.out.println("[DEBUG] Final result: " + result);
+        logger.log("[DEBUG] Final result: " + result);
 
         return result;
-    }
-
-
-    public static Map<String, Map<String, Object>> getTranslations() {
-        return translations;
     }
 
     private static String getLocale(Player player) {
@@ -98,20 +106,16 @@ public class Lang {
         }
     }
 
-    // Supports dot notation: "corlex.welcome" resolves to nested value in the map
     public static String getNestedValue(Map<String, ?> map, String path) {
         String[] parts = path.split("\\.");
         Object current = map;
-
         for (String part : parts) {
             if (!(current instanceof Map)) return null;
             current = ((Map<?, ?>) current).get(part);
         }
-
         return (current instanceof String) ? (String) current : null;
     }
 
-    // Flattens all top-level key-values (used for static replacements like {prefix})
     private static Map<String, String> flatten(Map<String, ?> map) {
         Map<String, String> flat = new HashMap<>();
         for (Map.Entry<String, ?> entry : map.entrySet()) {
@@ -128,9 +132,8 @@ public class Lang {
                         "status", "This is a test with {coins} and {rank}"
                 )
         );
-
         String value = getNestedValue(test, "corlex.status");
-        System.out.println("[DEBUG] test corlex.status = " + value);
+        LoggingManager logger = Bukkit.getServicesManager().load(LoggingManager.class);
+        logger.log("[DEBUG] test corlex.status = " + value);
     }
-
 }

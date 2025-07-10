@@ -19,6 +19,7 @@ import java.util.Map;
 public final class ConfigManager {
     private static JavaPlugin plugin;
     private static FileConfiguration config;
+    private static final List<String> SUPPORTED_LANGS = List.of("en", "tr");
 
     private ConfigManager() { }
 
@@ -28,8 +29,34 @@ public final class ConfigManager {
     public static void init(JavaPlugin pl) {
         plugin = pl;
         plugin.saveDefaultConfig();
+        // copy *all* bundled langs
+        copyLanguageFiles();
+
+        // now the rest of your init…
         config = plugin.getConfig();
-        loadLanguageFile(getFallbackLanguage());
+//        loadLanguageFile(getFallbackLanguage());
+    }
+
+    /** Ensure each lang/<code>.yml exists on disk */
+    private static void copyLanguageFiles() {
+        Path langDir = plugin.getDataFolder().toPath().resolve("lang");
+        try {
+            Files.createDirectories(langDir);
+            for (String lang : SUPPORTED_LANGS) {
+                Path file = langDir.resolve(lang + ".yml");
+                if (Files.notExists(file)) {
+                    String resourcePath = "lang/" + lang + ".yml";
+                    if (plugin.getResource(resourcePath) != null) {
+                        plugin.saveResource(resourcePath, false);
+                        plugin.getLogger().info("Copied language file: " + lang + ".yml");
+                    } else {
+                        plugin.getLogger().warning("Missing bundled resource: " + resourcePath);
+                    }
+                }
+            }
+        } catch (IOException e) {
+            plugin.getLogger().severe("Could not create lang directory: " + e.getMessage());
+        }
     }
 
     /**
