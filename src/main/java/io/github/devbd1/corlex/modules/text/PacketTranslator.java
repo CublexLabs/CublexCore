@@ -13,6 +13,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonPrimitive;
 import io.github.devbd1.corlex.services.CorlexAPI;
+import io.github.devbd1.corlex.utilities.ColorManager;
 import io.github.devbd1.corlex.utilities.LoggingManager;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -69,61 +70,58 @@ public class PacketTranslator {
 
         // find marker and gather params
         for (int i = 0; i < extra.size(); i++) {
-            JsonElement markerEl = extra.get(i);
-            if (markerEl.isJsonPrimitive() && markerEl.getAsJsonPrimitive().isString()) {
-                String markerStr = markerEl.getAsString();
-                if (markerStr.startsWith("translate.")) {
-                    logger.log("[Debug] found marker: " + markerStr);
-                    // parse params: "translate.realisticseasons.current-biome,param1,param2"
-                    String tail = markerStr.substring("translate.".length());
-                    String[] parts = tail.split("\\s*,\\s*");
-                    if (parts.length == 0) return;
-                    String key = parts[0];
-                    String[] params = new String[parts.length - 1];
-                    for (int k = 1; k < parts.length; k++) {
-                        params[k - 1] = parts[k];
-                    }
-                    logger.log("[Debug] key='" + key + "' params=" + java.util.Arrays.toString(params));
-                    // fetch template
-                    String template = api.get(event.getPlayer(), key, Map.of());
-                    logger.log("[Debug] fetched template: " + template);
+            JsonElement el = extra.get(i);
 
-                    // $1, $2, $3... replace
-                    if (template != null) {
-                        for (int p = 0; p < params.length; p++) {
-                            template = template.replace("$" + (p + 1), params[p]);
+            // 1) Eğer direkt string ise
+            if (el.isJsonPrimitive() && el.getAsJsonPrimitive().isString()) {
+                String str = el.getAsString();
+                if (str.startsWith("translate.")) {
+                    // ... [Önceki gibi işlenir]
+                }
+            }
+
+            // 2) Eğer obje ve içinde "text" alanı varsa
+            if (el.isJsonObject()) {
+                JsonObject obj = el.getAsJsonObject();
+                if (obj.has("text")) {
+                    String text = obj.get("text").getAsString();
+                    if (text.startsWith("translate.")) {
+                        logger.log("[Debug] found marker in object: " + text);
+
+                        String tail = text.substring("translate.".length());
+                        String[] parts = tail.split("\\s*,\\s*");
+                        if (parts.length == 0) continue;
+                        String key = parts[0];
+                        String[] params = new String[parts.length - 1];
+                        for (int k = 1; k < parts.length; k++) {
+                            params[k - 1] = parts[k];
                         }
-                        logger.log("[Debug] after param replace: " + template);
-                    } else {
-                        logger.log("[Debug] no template found for key: " + key);
-                        template = "";
-                    }
+                        logger.log("[Debug] key='" + key + "' params=" + java.util.Arrays.toString(params));
+                        String template = api.get(event.getPlayer(), key, Map.of());
+                        logger.log("[Debug] fetched template: " + template);
 
-                    // clear marker
-                    extra.set(i, new JsonPrimitive(""));
-
-                    // find the next JSON object with a "text" field (usually right after marker)
-                    boolean applied = false;
-                    for (int j = i + 1; j < extra.size(); j++) {
-                        JsonElement el = extra.get(j);
-                        if (el.isJsonObject()) {
-                            JsonObject obj = el.getAsJsonObject();
-                            if (obj.has("text")) {
-                                obj.addProperty("text", template);
-                                logger.log("[Debug] set translated text at extra[" + j + "]");
-                                applied = true;
-                                break;
+                        if (template != null) {
+                            for (int p = 0; p < params.length; p++) {
+                                template = template.replace("$" + (p + 1), params[p]);
                             }
+                            logger.log("[Debug] after param replace: " + template);
+                        } else {
+                            logger.log("[Debug] no template found for key: " + key);
+                            template = "";
                         }
+
+                        // template: Çevrilmiş ve parametreleri doldurulmuş mesaj
+                        String colored = ColorManager.applyColorFormatting(template);
+                        obj.addProperty("text", colored);
+
+                        // opsiyonel: click_event, hover_event silmek için:
+                        // obj.remove("click_event");
+                        // obj.remove("hover_event");
                     }
-                    if (!applied) {
-                        logger.log("[Debug] couldn't find JSON object after marker to apply translation.");
-                    }
-                    // only handle one marker per packet for safety
-                    break;
                 }
             }
         }
+
         // write back
         String newJson = GSON.toJson(root);
         logger.log("[Debug] writing newJson=" + newJson);

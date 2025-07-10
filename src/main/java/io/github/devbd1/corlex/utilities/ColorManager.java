@@ -10,6 +10,7 @@ public class ColorManager {
     public static String applyColorFormatting(String input) {
         input = applyGradients(input);
         input = applyHexColors(input);
+        input = replaceColorCodes(input);
         return input;
     }
 
@@ -79,4 +80,10 @@ public class ColorManager {
         }
         return out.toString();
     }
+
+    private static String replaceColorCodes(String input) {
+        // & → § transform (exmp: &a, &6, &l, &r etc)
+        return input.replaceAll("(?i)&([0-9A-FK-OR])", "§$1");
+    }
+
 }
