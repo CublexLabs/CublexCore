@@ -23,15 +23,13 @@ import java.util.Map;
 public class PacketTranslator {
     private static final Gson GSON = new Gson();
 
-    /**
-     * Call once in onEnable() after you’ve built your CorlexAPI and LoggingManager.
-     */
     public static void init(JavaPlugin plugin, CorlexAPI api, LoggingManager logger) {
+        logger.log("[Debug] PacketTranslator.init()");
         if (!Bukkit.getPluginManager().isPluginEnabled("ProtocolLib")) {
-            logger.log("ProtocolLib not found. PacketTranslator disabled.");
+            logger.log("[Debug] ProtocolLib not enabled; skipping PacketTranslator");
             return;
         }
-        logger.log("ProtocolLib found. Registering PacketTranslator.");
+        logger.log("[Debug] ProtocolLib found; registering listener");
         ProtocolLibrary.getProtocolManager().addPacketListener(new PacketAdapter(
                 plugin,
                 ListenerPriority.NORMAL,
@@ -40,68 +38,95 @@ public class PacketTranslator {
         ) {
             @Override
             public void onPacketSending(PacketEvent event) {
-                try {
-                    handlePacket(event, api);
-                } catch (Throwable t) {
-                    logger.log("Error in PacketTranslator: " + t.getMessage());
-                    t.printStackTrace();
-                }
+                logger.log("[Debug] onPacketSending: " + event.getPacketType());
+                handlePacket(event, api, logger);
             }
         });
     }
 
-    private static void handlePacket(PacketEvent event, CorlexAPI api) {
-        PacketType type = event.getPacketType();
-        if (type != PacketType.Play.Server.CHAT
-                && type != PacketType.Play.Server.SYSTEM_CHAT) {
+    private static void handlePacket(PacketEvent event, CorlexAPI api, LoggingManager logger) {
+        WrappedChatComponent comp = event.getPacket().getChatComponents().read(0);
+        if (comp == null) {
+            logger.log("[Debug] comp == null -> returned");
+            return;
+        }
+        String rawJson = comp.getJson();
+        logger.log("[Debug] rawJson=" + rawJson);
+        if (rawJson == null || rawJson.isEmpty()) return;
+
+        JsonObject root;
+        try {
+            root = JsonParser.parseString(rawJson).getAsJsonObject();
+        } catch (Exception e) {
+            logger.log("[Debug] JSON parse error: " + e.getMessage());
             return;
         }
 
-        Player player = event.getPlayer();
-        WrappedChatComponent comp = event.getPacket()
-                .getChatComponents()
-                .read(0);
-        if (comp == null) return;
-        String rawJson = comp.getJson();
-        if (rawJson == null || rawJson.isEmpty()) return;
-
-        // parse the JSON into a tree
-        JsonObject root = JsonParser.parseString(rawJson).getAsJsonObject();
         JsonElement extraEl = root.get("extra");
-        if (extraEl == null || !extraEl.isJsonArray()) return;
+        if (!(extraEl instanceof JsonArray)) return;
         JsonArray extra = extraEl.getAsJsonArray();
+        logger.log("[Debug] extra size=" + extra.size());
 
-        boolean sawMarker = false;
+        // find marker and gather params
         for (int i = 0; i < extra.size(); i++) {
-            JsonElement el = extra.get(i);
+            JsonElement markerEl = extra.get(i);
+            if (markerEl.isJsonPrimitive() && markerEl.getAsJsonPrimitive().isString()) {
+                String markerStr = markerEl.getAsString();
+                if (markerStr.startsWith("translate.")) {
+                    logger.log("[Debug] found marker: " + markerStr);
+                    // parse params: "translate.realisticseasons.current-biome,param1,param2"
+                    String tail = markerStr.substring("translate.".length());
+                    String[] parts = tail.split("\\s*,\\s*");
+                    if (parts.length == 0) return;
+                    String key = parts[0];
+                    String[] params = new String[parts.length - 1];
+                    for (int k = 1; k < parts.length; k++) {
+                        params[k - 1] = parts[k];
+                    }
+                    logger.log("[Debug] key='" + key + "' params=" + java.util.Arrays.toString(params));
+                    // fetch template
+                    String template = api.get(event.getPlayer(), key, Map.of());
+                    logger.log("[Debug] fetched template: " + template);
 
-            // 1) a bare "translate@" or "translate." string?
-            if (el.isJsonPrimitive() && el.getAsJsonPrimitive().isString()) {
-                String txt = el.getAsString();
-                if ("translate@".equals(txt) || "translate.".equals(txt)) {
-                    sawMarker = true;
-                    extra.set(i, new JsonPrimitive("")); // remove marker
-                    continue;
-                }
-            }
+                    // $1, $2, $3... replace
+                    if (template != null) {
+                        for (int p = 0; p < params.length; p++) {
+                            template = template.replace("$" + (p + 1), params[p]);
+                        }
+                        logger.log("[Debug] after param replace: " + template);
+                    } else {
+                        logger.log("[Debug] no template found for key: " + key);
+                        template = "";
+                    }
 
-            // 2) if we just saw a marker, this object has the key
-            if (sawMarker && el.isJsonObject()) {
-                JsonObject compObj = el.getAsJsonObject();
-                JsonElement textEl = compObj.get("text");
-                if (textEl != null && textEl.isJsonPrimitive()) {
-                    String key = textEl.getAsString();
-                    String translated = api.get(player, key, Map.of());
-                    compObj.addProperty("text", translated);
+                    // clear marker
+                    extra.set(i, new JsonPrimitive(""));
+
+                    // find the next JSON object with a "text" field (usually right after marker)
+                    boolean applied = false;
+                    for (int j = i + 1; j < extra.size(); j++) {
+                        JsonElement el = extra.get(j);
+                        if (el.isJsonObject()) {
+                            JsonObject obj = el.getAsJsonObject();
+                            if (obj.has("text")) {
+                                obj.addProperty("text", template);
+                                logger.log("[Debug] set translated text at extra[" + j + "]");
+                                applied = true;
+                                break;
+                            }
+                        }
+                    }
+                    if (!applied) {
+                        logger.log("[Debug] couldn't find JSON object after marker to apply translation.");
+                    }
+                    // only handle one marker per packet for safety
+                    break;
                 }
-                sawMarker = false;
             }
         }
-
-        // serialize back and write into packet
+        // write back
         String newJson = GSON.toJson(root);
-        event.getPacket()
-                .getChatComponents()
-                .write(0, WrappedChatComponent.fromJson(newJson));
+        logger.log("[Debug] writing newJson=" + newJson);
+        event.getPacket().getChatComponents().write(0, WrappedChatComponent.fromJson(newJson));
     }
 }
