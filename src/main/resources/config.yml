@@ -5,14 +5,14 @@ logging-enabled: true # enable/disable logging into a separate file under /plugi
 restful-enabled: false # enable/disable REST API on your server. Check https://dev.cublex.net/wiki/corlex/rest
 debug-mode: true # enable/disable DEBUG mode
 
-# Variables that are used in the localization strings
+# Variables (as placeholders) that are used in the localization strings
 prefix: "#ffc13b[Corlex] &r"
 test-prefix: "&c[Corlex] &r"
 discord: "https://discord.gg/cublex" # Chat and announcements
 telegram: "https://t.me/mcublex" # Announcements and replies
 mobile-app: "" # In-app purchases and spending shop
 
-# Settings for the GUI module
+# Settings for GUI module
 gui:
   titles:
     players: "&aOnline Players"

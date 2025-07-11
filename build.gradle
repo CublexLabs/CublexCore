@@ -49,7 +49,7 @@ jar {
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
     manifest {
         attributes(
-                'Main-Class': 'com.DevBD1.corlex.Main' // optional, not needed for plugins
+                'Main-Class': 'io.github.devbd1.cublexcore.Main' // optional, not needed for plugins
         )
     }
 
@@ -57,7 +57,7 @@ jar {
         configurations.runtimeClasspath.filter { it.name.endsWith("jar") }.collect { zipTree(it) }
     }
 
-    archiveClassifier.set("") // creates Corlex-1.1.0.jar instead of Corlex-1.1.0-all.jar
+    archiveClassifier.set("") // creates Cublex-1.1.0.jar instead of Cublex-1.1.0-all.jar
 }
 
 def targetJavaVersion = 21

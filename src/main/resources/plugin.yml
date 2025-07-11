@@ -1,10 +1,10 @@
-name: Corlex
+name: CublexAPI
 version: ${version}
-main: io.github.devbd1.corlex.Main
+main: io.github.devbd1.cublexcore.Main
 api-version: '1.21'
 load: STARTUP
 authors: [ DevBD1 ]
-description: Spigot development library, built for the latest version.
+description: Spigot development library, mainly built for Cublex.net but its API can be used in other plugins.
 website: https://dev.cublex.net
 depend:
   - ProtocolLib
@@ -12,11 +12,13 @@ softdepend:
   - RealisticSeasons
   - PlaceholderAPI
 commands:
-  corlex:
-    description: Corlex command
-    usage: /corlex <help|reload|test>
-    permission: corlex.admin
+  cublex:
+    description: CublexCore main command
+    usage: /cublex <help|reload|ver|getkey>
+    permission: cublex.admin
 permissions:
-  corlex.admin:
-    description: Allows admin access to Corlex commands
+  cublexcore.admin:
+    description: Allows admin access to any Cublex command
     default: op
+  cublexcore.cmd.version:
+    description: Allows access to /cublex version command
