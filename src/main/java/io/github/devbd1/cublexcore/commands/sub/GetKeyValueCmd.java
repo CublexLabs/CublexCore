@@ -1,5 +1,6 @@
 package io.github.devbd1.cublexcore.commands.sub;
 
+import io.github.devbd1.cublexcore.commands.CommandConfig;
 import io.github.devbd1.cublexcore.commands.SubCommand;
 import io.github.devbd1.cublexcore.modules.text.Lang;
 import org.bukkit.command.CommandSender;
@@ -14,14 +15,20 @@ public class GetKeyValueCmd implements SubCommand{
     }
 
     @Override
-    public String permission() {
-        return ""; // no permission required
+    public List<String> permissions()
+    {
+        return CommandConfig.getPermissions("lang");
+    }
+
+    @Override
+    public List<String> aliases() {
+        return CommandConfig.getAliases("lang");
     }
 
     @Override
     public boolean execute(CommandSender sender, String[] args) {
         if (args.length < 1) {
-            sender.sendMessage("§7Usage: /corlex lang [lang] <key> [key=value]...");
+            sender.sendMessage("§7Usage: /cublex lang [lang] <key> [key=value]...");
             return true;
         }
 
@@ -30,10 +37,10 @@ public class GetKeyValueCmd implements SubCommand{
         int placeholderStartIndex;
 
         if (Lang.getTranslations().containsKey(args[0].toLowerCase())) {
-            // /corlex lang en corlex.status ...
+            // /cublex lang en cublex.status ...
             locale = args[0].toLowerCase();
             if (args.length < 2) {
-                sender.sendMessage("§7Usage: /corlex lang <lang> <key> [key=value]...");
+                sender.sendMessage("§7Usage: /cublex lang <lang> <key> [key=value]...");
                 return true;
             }
             key = args[1];

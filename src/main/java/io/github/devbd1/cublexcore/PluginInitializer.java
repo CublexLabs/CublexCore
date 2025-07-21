@@ -39,11 +39,11 @@ public class PluginInitializer {
         // ** ProtocolLib packet‐translation hook **
         ModuleRegistrar.register(plugin, api, logger);
 
-        logger.log("Corlex fully enabled.");
+        logger.log("CublexCore is fully enabled.");
     }
 
     public void disable() {
         ServiceUnregistrar.unregisterAll(plugin, api, logger);
-        logger.log("Corlex disabled.");
+        logger.log("CublexCore is disabled.");
     }
 }

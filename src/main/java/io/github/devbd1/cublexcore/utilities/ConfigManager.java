@@ -187,6 +187,18 @@ public final class ConfigManager {
 
     /** Helper to fetch and lowercase the fallback language. */
     private static String getFallbackLanguage() {
+
         return getString("fallback-language", "en").toLowerCase();
+    }
+
+    /**
+     * Returns the underlying FileConfiguration object.
+     * @return The current configuration
+     */
+    public static FileConfiguration getConfig() {
+        if (config == null) {
+            throw new IllegalStateException("ConfigManager has not been initialized. Call init() first.");
+        }
+        return config;
     }
 }

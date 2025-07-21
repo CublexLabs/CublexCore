@@ -7,7 +7,7 @@ import org.bukkit.command.TabCompleter;
 
 import java.util.*;
 
-public class CorlexTabCompleter implements TabCompleter {
+public class CublexTabCompleter implements TabCompleter {
 
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {

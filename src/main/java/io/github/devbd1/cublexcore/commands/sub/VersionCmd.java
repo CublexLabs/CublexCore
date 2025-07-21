@@ -1,5 +1,6 @@
 package io.github.devbd1.cublexcore.commands.sub;
 
+import io.github.devbd1.cublexcore.commands.CommandConfig;
 import io.github.devbd1.cublexcore.commands.SubCommand;
 import org.bukkit.command.CommandSender;
 
@@ -12,9 +13,16 @@ public class VersionCmd implements SubCommand {
     }
 
     @Override
-    public String permission() {
-        return "cublexcore.cmd.version";
+    public List<String> permissions()
+    {
+        return CommandConfig.getPermissions("version");
     }
+
+    @Override
+    public List<String> aliases() {
+        return CommandConfig.getAliases("version");
+    }
+
 
     @Override
     public boolean execute(CommandSender sender, String[] args) {

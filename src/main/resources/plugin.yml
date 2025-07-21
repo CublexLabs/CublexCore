@@ -1,4 +1,4 @@
-name: CublexAPI
+name: CublexCore
 version: ${version}
 main: io.github.devbd1.cublexcore.Main
 api-version: '1.21'
@@ -9,13 +9,17 @@ website: https://dev.cublex.net
 depend:
   - ProtocolLib
 softdepend:
+  - CubItems
+  - CubLoots
+  - CubSense
+  - CubConquest
   - RealisticSeasons
   - PlaceholderAPI
 commands:
   cublex:
     description: CublexCore main command
     usage: /cublex <help|reload|ver|getkey>
-    permission: cublex.admin
+    permission: cublexcore.admin
 permissions:
   cublexcore.admin:
     description: Allows admin access to any Cublex command

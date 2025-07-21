@@ -27,3 +27,31 @@ gui:
     slots: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 17, 18, 26, 27, 35, 36, 44, 45, 46, 47, 48, 50, 51, 52, 53]
 
 # Settings for RealisticSeasons hook
+
+# Commands
+commands:
+  version:
+    aliases: [ver]
+    permissions:
+      - corlex.admin.version
+      - corlex.admin.*
+  reload:
+    aliases: [rl, restart]
+    permissions:
+      - corlex.admin.reload
+      - corlex.admin.*
+  lang:
+    aliases: [language, l]
+    permissions:
+      - corlex.admin.lang
+      - corlex.mod.lang
+  log:
+    aliases: [logs]
+    permissions:
+      - corlex.admin.log
+      - corlex.mod.log
+  gui:
+    aliases: [menu, interface]
+    permissions:
+      - corlex.gui
+      - corlex.user.gui

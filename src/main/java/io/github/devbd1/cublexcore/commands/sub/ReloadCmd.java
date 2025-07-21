@@ -1,5 +1,6 @@
 package io.github.devbd1.cublexcore.commands.sub;
 
+import io.github.devbd1.cublexcore.commands.CommandConfig;
 import io.github.devbd1.cublexcore.modules.text.Lang;
 import io.github.devbd1.cublexcore.utilities.ConfigManager;
 import org.bukkit.Bukkit;
@@ -10,6 +11,11 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.util.List;
 
 public class ReloadCmd implements SubCommand {
+    @Override
+    public String name() {
+        return "reload";
+    }
+
 
     private final JavaPlugin plugin;
 
@@ -18,13 +24,14 @@ public class ReloadCmd implements SubCommand {
     }
 
     @Override
-    public String name() {
-        return "reload";
+    public List<String> permissions()
+    {
+        return CommandConfig.getPermissions("reload");
     }
 
     @Override
-    public String permission() {
-        return "corlex.admin";
+    public List<String> aliases() {
+        return CommandConfig.getAliases("reload");
     }
 
     @Override
@@ -35,8 +42,8 @@ public class ReloadCmd implements SubCommand {
 
         ConfigManager.printStatus();
 
-        sender.sendMessage("§aCorlex reloaded.");
-        Bukkit.getLogger().info("[Corlex] Reloaded by " + sender.getName());
+        sender.sendMessage("§aCublexCore reloaded.");
+        Bukkit.getLogger().info("[aCublexCore] Reloaded by " + sender.getName());
         return true;
     }
 
