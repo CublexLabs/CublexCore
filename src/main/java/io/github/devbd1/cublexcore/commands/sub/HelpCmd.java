@@ -10,7 +10,7 @@ import java.util.Collection;
 
 public class HelpCmd implements SubCommand {
     @Override
-    public String name() {
+    public String getName() {
         return "help";
     }
 
@@ -21,13 +21,13 @@ public class HelpCmd implements SubCommand {
     }
 
     @Override
-    public List<String> permissions()
+    public List<String> getPermissions()
     {
         return CommandConfig.getPermissions("help");
     }
 
     @Override
-    public List<String> aliases() {
+    public List<String> getAliases() {
         return CommandConfig.getAliases("help");
     }
 
@@ -38,13 +38,13 @@ public class HelpCmd implements SubCommand {
     
     Collection<SubCommand> commands = manager.getCommands();
     for (SubCommand cmd : commands) {
-        List<String> permissions = cmd.permissions();
+        List<String> permissions = cmd.getPermissions();
         boolean hasPermission = permissions.isEmpty() || 
         permissions.stream().anyMatch(sender::hasPermission);
         
         if (!hasPermission) continue;
         
-        sender.sendMessage("§e" + cmd.usage() + " §7- " + cmd.description());
+        sender.sendMessage("§e" + cmd.getUsage() + " §7- " + cmd.getDescription());
     }
     return true;
 }
@@ -55,7 +55,7 @@ public class HelpCmd implements SubCommand {
     }
 
     @Override
-    public String description() {
+    public String getDescription() {
         return "Shows this help menu.";
     }
 }

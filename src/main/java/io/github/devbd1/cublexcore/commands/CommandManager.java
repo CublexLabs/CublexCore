@@ -8,7 +8,7 @@ public class CommandManager implements CommandExecutor, TabCompleter {
     private final Map<String, String> aliasToCommand = new HashMap<>();
 
     public void register(SubCommand cmd) {
-        String name = cmd.name().toLowerCase();
+        String name = cmd.getName().toLowerCase();
         commands.put(name, cmd);
 
         // Register aliases from config
@@ -42,7 +42,7 @@ public class CommandManager implements CommandExecutor, TabCompleter {
 
         // Check if player has ANY of the required permissions
         boolean hasPermission = false;
-        List<String> permissions = sub.permissions();
+        List<String> permissions = sub.getPermissions();
 
         if (permissions.isEmpty()) {
             hasPermission = true;  // No permissions required
@@ -69,9 +69,9 @@ public class CommandManager implements CommandExecutor, TabCompleter {
             List<String> suggestions = new ArrayList<>();
             // Add main commands and their aliases if player has permission
             for (SubCommand subCmd : commands.values()) {
-                if (hasAnyPermission(sender, subCmd.permissions())) {
-                    suggestions.add(subCmd.name());
-                    suggestions.addAll(CommandConfig.getAliases(subCmd.name()));
+                if (hasAnyPermission(sender, subCmd.getPermissions())) {
+                    suggestions.add(subCmd.getName());
+                    suggestions.addAll(CommandConfig.getAliases(subCmd.getName()));
                 }
             }
             return suggestions;
@@ -83,7 +83,7 @@ public class CommandManager implements CommandExecutor, TabCompleter {
         }
 
         SubCommand sub = commands.get(subCmdName);
-        if (sub == null || !hasAnyPermission(sender, sub.permissions())) {
+        if (sub == null || !hasAnyPermission(sender, sub.getPermissions())) {
             return Collections.emptyList();
         }
 

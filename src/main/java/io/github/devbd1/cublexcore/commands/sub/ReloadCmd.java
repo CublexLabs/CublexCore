@@ -12,7 +12,7 @@ import java.util.List;
 
 public class ReloadCmd implements SubCommand {
     @Override
-    public String name() {
+    public String getName() {
         return "reload";
     }
 
@@ -24,13 +24,13 @@ public class ReloadCmd implements SubCommand {
     }
 
     @Override
-    public List<String> permissions()
+    public List<String> getPermissions()
     {
         return CommandConfig.getPermissions("reload");
     }
 
     @Override
-    public List<String> aliases() {
+    public List<String> getAliases() {
         return CommandConfig.getAliases("reload");
     }
 

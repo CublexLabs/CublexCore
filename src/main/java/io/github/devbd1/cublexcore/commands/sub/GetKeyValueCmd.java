@@ -10,18 +10,18 @@ import java.util.*;
 
 public class GetKeyValueCmd implements SubCommand{
     @Override
-    public String name() {
+    public String getName() {
         return "lang";
     }
 
     @Override
-    public List<String> permissions()
+    public List<String> getPermissions()
     {
         return CommandConfig.getPermissions("lang");
     }
 
     @Override
-    public List<String> aliases() {
+    public List<String> getAliases() {
         return CommandConfig.getAliases("lang");
     }
 
