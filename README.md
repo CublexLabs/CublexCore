@@ -67,7 +67,7 @@ This plugin is designed to be extended by other plugins. If you’re building so
 
 ---
 
-> Build smarter. Standardize everything. Use Corlex.
+> Build smarter. Standardize everything. Use CublexCore.
 
 NOTES ON GUI MODULE:
 1- if 6 lines, have a border in slots [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 17, 18, 26, 27, 35, 36, 44, 45, 46, 47, 48, 50, 51, 52, 53]
