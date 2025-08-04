@@ -3,7 +3,7 @@ package io.github.devbd1.cublexcore.modules;
 import io.github.devbd1.cublexcore.Main;
 import io.github.devbd1.cublexcore.modules.text.PacketTranslator;
 import io.github.devbd1.cublexcore.services.CorlexAPI;
-import io.github.devbd1.cublexcore.utilities.LoggingManager;
+import io.github.devbd1.cublexcore.modules.logging.LoggingManager;
 
 public class ModuleRegistrar {
     private ModuleRegistrar() {

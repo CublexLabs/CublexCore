@@ -2,7 +2,7 @@ package io.github.devbd1.cublexcore.modules.text;
 
 import io.github.devbd1.cublexcore.utilities.ColorManager;
 import io.github.devbd1.cublexcore.utilities.ConfigManager;
-import io.github.devbd1.cublexcore.utilities.LoggingManager;
+import io.github.devbd1.cublexcore.modules.logging.LoggingManager;
 import io.github.devbd1.cublexcore.utilities.PlaceholderManager;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;

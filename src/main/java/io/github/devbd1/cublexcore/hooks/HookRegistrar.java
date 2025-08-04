@@ -1,7 +1,7 @@
 package io.github.devbd1.cublexcore.hooks;
 
 import io.github.devbd1.cublexcore.Main;
-import io.github.devbd1.cublexcore.utilities.LoggingManager;
+import io.github.devbd1.cublexcore.modules.logging.LoggingManager;
 import io.github.devbd1.cublexcore.hooks.PlaceholderAPI.PlaceholderApplier;
 //import io.github.devbd1.corlex.hooks.CubItems.ClientSideTextAdapter;
 import io.github.devbd1.cublexcore.hooks.RealisticSeasons.Listener;

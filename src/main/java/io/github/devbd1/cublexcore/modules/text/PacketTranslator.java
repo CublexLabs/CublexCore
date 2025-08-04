@@ -13,7 +13,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import io.github.devbd1.cublexcore.services.CorlexAPI;
 import io.github.devbd1.cublexcore.utilities.ColorManager;
-import io.github.devbd1.cublexcore.utilities.LoggingManager;
+import io.github.devbd1.cublexcore.modules.logging.LoggingManager;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 

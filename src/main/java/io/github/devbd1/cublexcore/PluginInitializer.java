@@ -1,6 +1,7 @@
 package io.github.devbd1.cublexcore;
 
 import io.github.devbd1.cublexcore.modules.ModuleRegistrar;
+import io.github.devbd1.cublexcore.modules.logging.LoggingManager;
 import io.github.devbd1.cublexcore.modules.text.Lang;
 import io.github.devbd1.cublexcore.services.ServiceRegistrar;
 import io.github.devbd1.cublexcore.services.ServiceUnregistrar;
