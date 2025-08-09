@@ -18,11 +18,15 @@ softdepend:
 commands:
   cublex:
     description: CublexCore main command
-    usage: /cublex <help|reload|ver|getkey>
+    usage: /cublex <help|reload|ver|getkey|testlogger>
     permission: cublexcore.admin
+
 permissions:
   cublexcore.admin:
     description: Allows admin access to any Cublex command
     default: op
   cublexcore.cmd.version:
     description: Allows access to /cublex version command
+  cublexcore.cmd.testlogger:
+    description: Allows access to /cublex testlogger command
+    default: op

@@ -1,6 +1,7 @@
 package io.github.devbd1.cublexcore.utilities;
 
 import io.github.devbd1.cublexcore.hooks.PlaceholderAPI.PlaceholderApplier;
+import io.github.devbd1.cublexcore.modules.logger.LoggingManager;
 import org.bukkit.entity.Player;
 import java.util.Map;
 

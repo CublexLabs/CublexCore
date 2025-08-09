@@ -30,6 +30,13 @@ gui:
 
 # Commands
 commands:
+  testlogger:
+    aliases:
+      - "logtest"
+      - "testlog"
+    permissions:
+      - "cublexcore.admin"
+      - "cublexcore.cmd.testlogger"
   version:
     aliases: [ver]
     permissions:

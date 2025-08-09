@@ -1,11 +1,9 @@
 package io.github.devbd1.cublexcore.commands;
 
 import io.github.devbd1.cublexcore.Main;
-import io.github.devbd1.cublexcore.commands.sub.HelpCmd;
-import io.github.devbd1.cublexcore.commands.sub.ReloadCmd;
-import io.github.devbd1.cublexcore.commands.sub.GetKeyValueCmd;
-import io.github.devbd1.cublexcore.commands.sub.VersionCmd;
-import io.github.devbd1.cublexcore.utilities.LoggingManager;
+import io.github.devbd1.cublexcore.commands.sub.*;
+import io.github.devbd1.cublexcore.commands.test.*;
+import io.github.devbd1.cublexcore.modules.logger.LoggingManager;
 import org.bukkit.command.PluginCommand;
 
 public final class CommandRegistrar {
@@ -14,19 +12,20 @@ public final class CommandRegistrar {
     public static void register(Main plugin, LoggingManager logger) {
         PluginCommand cmd = plugin.getCommand("cublex");
         if (cmd == null) {
-            logger.log("COMMAND '/cublex' NOT FOUND! Aborting command registration.");
+            logger.severe("COMMAND '/cublex' NOT FOUND! Aborting command registration and disabling the plugin.");
             plugin.getServer().getPluginManager().disablePlugin(plugin);
             return;
         }
 
         CommandManager mgr = new CommandManager();
-        mgr.register(new ReloadCmd(plugin));
         mgr.register(new GetKeyValueCmd());
-        mgr.register(new HelpCmd(mgr));
-        mgr.register(new VersionCmd(plugin));
+        mgr.register(new HelpCmd(mgr, logger));
+        mgr.register(new ReloadCmd(plugin, logger));
+        mgr.register(new VersionCmd(plugin, logger));
+        mgr.register(new TestLoggerCmd(plugin, logger));
 
         cmd.setExecutor(mgr);
         cmd.setTabCompleter(mgr);
-        logger.log("Commands registered.");
+        logger.info("Commands registered.");
     }
 }

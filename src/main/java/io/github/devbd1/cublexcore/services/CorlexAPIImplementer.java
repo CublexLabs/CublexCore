@@ -2,7 +2,7 @@ package io.github.devbd1.cublexcore.services;
 
 import io.github.devbd1.cublexcore.modules.text.Lang;
 import io.github.devbd1.cublexcore.utilities.ConfigManager;
-import io.github.devbd1.cublexcore.utilities.LoggingManager;
+import io.github.devbd1.cublexcore.modules.logger.LoggingManager;
 import io.github.devbd1.cublexcore.utilities.LocaleGetter;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;

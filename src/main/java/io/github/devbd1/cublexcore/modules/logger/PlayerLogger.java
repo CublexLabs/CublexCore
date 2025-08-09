@@ -1,5 +1,6 @@
-package io.github.devbd1.cublexcore.modules.logging;
+package io.github.devbd1.cublexcore.modules.logger;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import java.io.BufferedWriter;
@@ -12,28 +13,34 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class PlayerLogger {
     private static final DateTimeFormatter DATE_FMT = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     private static final DateTimeFormatter TS_FMT = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
     
     private final Plugin plugin;
-    private final Logger logger;
+    private final LoggingManager logger;
     private final BlockingQueue<LogEntry> queue = new LinkedBlockingQueue<>();
     private final Path basePlayerLogsDir;
+    private final boolean isOnlineMode;
     
-    public PlayerLogger(Plugin plugin) {
+    public PlayerLogger(Plugin plugin, LoggingManager logger) {
         this.plugin = plugin;
-        this.logger = plugin.getLogger();
-        this.basePlayerLogsDir = Path.of("plugins", "players");
+        this.logger = logger;
+        // Check if server is in online mode
+        this.isOnlineMode = Bukkit.getOnlineMode();
+        
+        // Changed path to go up one level from plugins folder and use custom structure
+        this.basePlayerLogsDir = Path.of(".", "logs_custom", "players");
         
         // Create base directory
         try {
             Files.createDirectories(basePlayerLogsDir);
+            plugin.getLogger().info("Player logs directory created/verified at: " + basePlayerLogsDir.toAbsolutePath());
+            plugin.getLogger().info("Server online mode: " + isOnlineMode + " - Using " + 
+                (isOnlineMode ? "UUIDs" : "player names") + " for player identification");
         } catch (IOException e) {
-            logger.log(Level.SEVERE, "Could not create player logs directory: " + basePlayerLogsDir, e);
+            logger.severe("Could not create player logs directory: " + basePlayerLogsDir.toAbsolutePath() + " - " + e.getMessage());
         }
         
         // Start processing thread
@@ -47,9 +54,13 @@ public class PlayerLogger {
     }
     
     public void logPlayer(Player player, String event, String notes) {
+        // Use UUID for online servers, player name for offline servers
+        String playerIdentifier = isOnlineMode ? player.getUniqueId().toString() : player.getName();
+        
         LogEntry entry = new LogEntry(
             plugin.getName(),
-            player.getName(),
+            playerIdentifier,
+            player.getName(), // Always keep the display name for logging readability
             String.format("%s, %.2f,%.2f,%.2f",
                 player.getWorld().getName(),
                 player.getLocation().getX(),
@@ -72,7 +83,8 @@ public class PlayerLogger {
                 String timestamp = TS_FMT.format(LocalDateTime.now());
                 String date = DATE_FMT.format(LocalDateTime.now());
                 
-                Path playerDir = basePlayerLogsDir.resolve(entry.playerName);
+                // Use the player identifier for directory structure
+                Path playerDir = basePlayerLogsDir.resolve(entry.playerIdentifier);
                 Path logFile = playerDir.resolve(date + ".log");
                 
                 try {
@@ -81,17 +93,19 @@ public class PlayerLogger {
                     try (PrintWriter out = new PrintWriter(
                             new BufferedWriter(new FileWriter(logFile.toFile(), true))
                     )) {
-                        out.printf("[%s] [%s] [%s] [%s] [%s] [%s]%n",
+                        // Log format includes both identifier and display name for clarity
+                        out.printf("[%s] [%s] [%s] [%s] [%s] [%s] [%s]%n",
                             timestamp,
                             entry.pluginName,
-                            entry.playerName,
+                            entry.playerIdentifier,
+                            entry.playerDisplayName,
                             entry.location,
                             entry.event,
                             entry.notes
                         );
                     }
                 } catch (IOException e) {
-                    logger.log(Level.SEVERE, "Failed to write player log for " + entry.playerName, e);
+                    logger.severe("Failed to write player log for " + entry.playerDisplayName + " - " + e.getMessage());
                 }
                 
             } catch (InterruptedException ix) {
@@ -102,14 +116,16 @@ public class PlayerLogger {
     
     private static class LogEntry {
         final String pluginName;
-        final String playerName;
+        final String playerIdentifier; // UUID for online mode, name for offline mode
+        final String playerDisplayName; // Always the player's name for readability
         final String location;
         final String event;
         final String notes;
         
-        LogEntry(String pluginName, String playerName, String location, String event, String notes) {
+        LogEntry(String pluginName, String playerIdentifier, String playerDisplayName, String location, String event, String notes) {
             this.pluginName = pluginName;
-            this.playerName = playerName;
+            this.playerIdentifier = playerIdentifier;
+            this.playerDisplayName = playerDisplayName;
             this.location = location;
             this.event = event;
             this.notes = notes;

@@ -3,11 +3,10 @@ package io.github.devbd1.cublexcore.commands;
 import org.bukkit.command.CommandSender;
 import java.util.List;
 
-/**
- * Represents a subcommand that can be registered with the command manager.
- * @param <T> The type of arguments this command accepts
- */
-public interface SubCommand {
+   /**
+    * Represents a subcommand that can be registered with the command manager.
+    */
+   public interface SubCommand {
     String DEFAULT_DESCRIPTION = "No description provided.";
     String COMMAND_PREFIX = "/";
 
@@ -51,16 +50,6 @@ public interface SubCommand {
     }
 
     /**
-     * Executes the command logic.
-     * Note: Permission checking is handled by CommandManager before this method is called.
-     *
-     * @param sender The command sender
-     * @param args The command arguments
-     * @return true if the command was executed successfully
-     */
-    boolean execute(CommandSender sender, String[] args);
-
-    /**
      * Provides tab completion suggestions for this command.
      * Note: Permission checking is handled by CommandManager before this method is called.
      *
@@ -69,5 +58,15 @@ public interface SubCommand {
      * @return List of suggestions
      */
     List<String> tabComplete(CommandSender sender, String[] args);
+
+    /**
+     * Executes the command logic.
+     * Note: Permission checking is handled by CommandManager before this method is called.
+     *
+     * @param sender The command sender
+     * @param args The command arguments
+     * @return true if the command was executed successfully
+     */
+    boolean execute(CommandSender sender, String[] args);
 
 }

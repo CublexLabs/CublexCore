@@ -6,7 +6,7 @@ package io.github.devbd1.cublexcore.hooks.PlaceholderAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import me.clip.placeholderapi.PlaceholderAPI;
-import io.github.devbd1.cublexcore.utilities.LoggingManager;
+import io.github.devbd1.cublexcore.modules.logger.LoggingManager;
 
 public class PlaceholderApplier {
     private static boolean enabled = false;

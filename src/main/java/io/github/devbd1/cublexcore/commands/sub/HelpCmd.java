@@ -1,38 +1,44 @@
 package io.github.devbd1.cublexcore.commands.sub;
 
+import io.github.devbd1.cublexcore.commands.SubCommand;
 import io.github.devbd1.cublexcore.commands.CommandConfig;
 import io.github.devbd1.cublexcore.commands.CommandManager;
-import io.github.devbd1.cublexcore.commands.SubCommand;
-import org.bukkit.command.CommandSender;
 
+import io.github.devbd1.cublexcore.modules.logger.LoggingManager;
+import org.bukkit.command.CommandSender;
 import java.util.List;
 import java.util.Collection;
 
 public class HelpCmd implements SubCommand {
-    @Override
-    public String getName() {
-        return "help";
-    }
-
+    String CMD_NAME = "help";
+    private final LoggingManager logger;
     private final CommandManager manager;
 
-    public HelpCmd(CommandManager manager) {
+    public HelpCmd(CommandManager manager, LoggingManager logger) {
         this.manager = manager;
+        this.logger = logger;
+    }
+
+    @Override
+    public String getName() {
+        return CMD_NAME;
     }
 
     @Override
     public List<String> getPermissions()
     {
-        return CommandConfig.getPermissions("help");
+        return CommandConfig.getPermissions(CMD_NAME);
     }
 
     @Override
     public List<String> getAliases() {
-        return CommandConfig.getAliases("help");
+        return CommandConfig.getAliases(CMD_NAME);
     }
 
     @Override
     public boolean execute(CommandSender sender, String[] args) {
+        logger.info("§6[CublexCore] §f'/cublex help' command used by §e" + sender.getName());
+
         sender.sendMessage("§8§m------§r §aCublexCore Help §8§m------");
         if (manager == null) return true;
     
