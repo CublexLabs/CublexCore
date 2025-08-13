@@ -9,6 +9,8 @@ public class Main extends JavaPlugin {
     public void onEnable() {
         bootstrap = new PluginInitializer(this);
         bootstrap.enable();
+
+        getServer().getPluginManager().registerEvents(new io.github.devbd1.cublexcore.commands.test.LevelsDialogEventListener(), this);
     }
 
     @Override

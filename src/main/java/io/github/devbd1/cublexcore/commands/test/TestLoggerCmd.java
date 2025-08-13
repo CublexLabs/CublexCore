@@ -31,12 +31,12 @@ public class TestLoggerCmd implements SubCommand {
     
     @Override
     public List<String> getPermissions() {
-        return CommandConfig.getPermissions("testlogger");
+        return CommandConfig.getPermissions("admin_cmds");
     }
-    
+
     @Override
     public List<String> getAliases() {
-        return CommandConfig.getAliases("testlogger");
+        return CommandConfig.getAliases("admin_cmds");
     }
     
     @Override

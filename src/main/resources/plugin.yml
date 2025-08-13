@@ -30,3 +30,6 @@ permissions:
   cublexcore.cmd.testlogger:
     description: Allows access to /cublex testlogger command
     default: op
+  cublexcore.cmd.testdialog:
+    description: Allows access to /testdialog command
+    default: op
