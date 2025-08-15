@@ -1,4 +1,4 @@
-package io.github.devbd1.cublexcore.commands.test;
+package io.github.devbd1.cublexcore.modules.dialog;
 
 import io.papermc.paper.connection.PlayerGameConnection;
 import io.papermc.paper.dialog.DialogResponseView;
@@ -8,7 +8,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
-public final class LevelsDialogEventListener implements Listener {
+public final class DialogEventListener implements Listener {
     private static final Key CONFIRM_ID = Key.key("papermc:user_input/confirm");
 
     @EventHandler

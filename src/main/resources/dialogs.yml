@@ -1,0 +1,61 @@
+dialogs:
+  exp_config:
+    title:
+      text: "Configure your new experience value"
+      color: "white"
+
+    type: "confirmation"
+
+    buttons:
+      confirm:
+        text: "Confirm"
+        description: "Click to confirm your input."
+        color: "#AEFFC1"
+        weight: 100
+        action:
+          type: "custom_click"
+          key: "papermc:user_input/confirm"
+
+      cancel:
+        text: "Discard"
+        description: "Click to discard your input."
+        color: "#FFA0B1"
+        weight: 100
+        action: null
+
+    inputs:
+      - id: "level"
+        type: "number_range"
+        label:
+          text: "Level"
+          color: "green"
+        min: 0
+        max: 100
+        step: 1
+        initial: 0
+        width: 300
+
+      - id: "experience"
+        type: "number_range"
+        label:
+          text: "Experience"
+          color: "green"
+        min: 0
+        max: 100
+        step: 1
+        initial: 0
+        width: 300
+        label_format: "%s: %s percent to the next level"
+
+      - id: "player_name"
+        type: "text"
+        label:
+          text: "Player Name"
+          color: "blue"
+        initial: "?? name ??"
+        max_length: 16
+        width: 300
+        label_visible: true
+        multiline:
+          min_rows: 2
+          max_columns: 50
