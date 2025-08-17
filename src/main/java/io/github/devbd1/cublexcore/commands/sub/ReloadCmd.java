@@ -2,6 +2,7 @@ package io.github.devbd1.cublexcore.commands.sub;
 
 import io.github.devbd1.cublexcore.commands.SubCommand;
 import io.github.devbd1.cublexcore.commands.CommandConfig;
+import io.github.devbd1.cublexcore.modules.dialog.DialogConfigManager;
 import io.github.devbd1.cublexcore.modules.logger.LoggingManager;
 import io.github.devbd1.cublexcore.modules.text.Lang;
 import io.github.devbd1.cublexcore.utilities.ConfigManager;
@@ -48,6 +49,9 @@ public class ReloadCmd implements SubCommand {
         plugin.reloadConfig();
         ConfigManager.init(plugin);
         Lang.load(plugin);
+
+        // Reload dialogs.yml and refresh dialog definitions
+        DialogConfigManager.init(plugin);
 
         ConfigManager.printStatus();
 

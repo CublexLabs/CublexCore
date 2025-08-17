@@ -22,6 +22,7 @@ public final class CommandRegistrar {
         mgr.register(new HelpCmd(mgr, logger));
         mgr.register(new ReloadCmd(plugin, logger));
         mgr.register(new VersionCmd(plugin, logger));
+        mgr.register(new DialogCmd());
         mgr.register(new TestLoggerCmd(plugin, logger));
         mgr.register(new TestDialogScreen());
 
