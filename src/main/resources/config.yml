@@ -1,9 +1,9 @@
 # Static variables. These cannot be changed during runtime. You must stop the server to make changes here
 server-name: cublex.net
 fallback-language: en # it is used when the player's client locale is not supported
-logging-enabled: true # enable/disable logging into a separate file under /plugins/Corlex folder (universal)
+logging-enabled: false # enable/disable logging into a separate file under /plugins/Corlex folder (universal)
 restful-enabled: false # enable/disable REST API on your server. Check https://dev.cublex.net/wiki/corlex/rest
-debug-mode: true # enable/disable DEBUG mode
+debug-mode: false # enable/disable DEBUG mode
 
 # Variables (as placeholders) that are used in the localization strings
 prefix: "#ffc13b[Corlex] &r"
