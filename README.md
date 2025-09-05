@@ -8,7 +8,7 @@ Cub.jar is a robust and extensible API plugin designed to serve as the shared co
 
 ## ✨ 🧪 Features
 
-- 🌍 **Native Localization**: Supports YAML-based i18n with `{placeholders}`, automatic fallback to the `{default-language}`.
+- 🌍 **Native Localization**: Supports YAML-based i18n with `{placeholders}`, automatic fallback to the `{default-language}`
 - 🧾 **Centralized Log&Debug System**: Missing keys, fallback events, and in-game log viewing
 - 🧱 **Mini-Message Support**: Defaults, server name, and more in `config.yml`
 - 📌 **Placeholders**: Dynamic placeholders like `{player}`, `{world}`, `{coins}`, etc. and static placeholders from config.yml like `{server-name}`, `{discord}`, etc.
