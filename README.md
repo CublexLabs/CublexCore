@@ -49,12 +49,14 @@ corlex:
 
 ## 📦 Roadmap
 
+- /cub log recent command
+- Client-side item-lore support for extreme localization
 - GUI API (paged layouts, close/back buttons, border styles)
 - Auto-merging of locale files on update
 - Plugin usage metrics
 - Announcement API (Game, Discord)
 - AI module
-- Use arguments in permission-error message. Interaction or command error
+- Use arguments in the permission-error message. Interaction or command error
 - Format commands help into clickable TextComponents
 - Paginate the output of help command for more commands
 - Auto-suggest when the user types an invalid command
