@@ -1,22 +1,40 @@
-# Corlex
+[![Wiki: 1.0](https://img.shields.io/badge/Wiki-Cublex_Labs-blue.svg)]([https://creativecommons.org/licenses/by/4.0/](https://labs.cublex.net/docs/category/common-in-all-plugins))
+# Cub - The Core
 
-![corlex_foundation_api_banner](https://github.com/user-attachments/assets/cb8eb205-6922-4181-b8ea-735c47c9341d)
-
-**The Modular API Foundation for Your Minecraft Plugin Ecosystem**
-Corlex is a robust and extensible API plugin designed to serve as the shared core for your Minecraft plugin suite. It centralizes localization, logging, and more — enabling other plugins to integrate seamlessly.
+**The Modular API Foundation for Cublex Plugin Ecosystem.**
+Cub.jar is a robust and extensible API plugin designed to serve as the shared core for Cub plugin ecosystem. It centralizes localization, logging, and more — enabling other plugins to integrate seamlessly.
 
 ---
 
 ## ✨ 🧪 Features
 
-- 🌍 **Localization**: Supports YAML-based i18n with `{placeholders}`
-- 🖥️ **Command System**: Modular subcommands via `/corlex`
-- 🧾 **Logging**: Missing keys, fallback events, and in-game log viewing
-- 🧱 **Config**: Defaults, server name, and more in `config.yml`
+- 🌍 **Native Localization**: Supports YAML-based i18n with `{placeholders}`, automatic fallback to the `{default-language}`.
+- 🧾 **Centralized Log&Debug System**: Missing keys, fallback events, and in-game log viewing
+- 🧱 **Mini-Message Support**: Defaults, server name, and more in `config.yml`
+- 📌 **Placeholders**: Dynamic placeholders like `{player}`, `{world}`, `{coins}`, etc. and static placeholders from config.yml like `{server-name}`, `{discord}`, etc.
 
 ---
 
-## 🧪 Example Usage
+## 🔧 Config Example
+
+```yaml
+# Static variables. These cannot be changed during runtime. You must stop the server to make changes here
+server-name: cublex.net
+fallback-language: en # it is used when the player's client locale is not supported
+logging-enabled: false # enable/disable logging into a separate file under /plugins/Corlex folder (universal)
+restful-enabled: false # enable/disable REST API on your server. Check https://dev.cublex.net/wiki/corlex/rest
+debug-mode: false # enable/disable DEBUG mode
+
+# Variables (as placeholders) that are used in the localization strings
+prefix: "#ffc13b[Cub] &r"
+test-prefix: "&c[Cub] &r"
+discord: "https://discord.gg/cublex" # Chat and announcements
+telegram: "https://t.me/mcublex" # Announcements and replies
+```
+
+---
+
+## 🧪 Example API Usage
 
 ```java
 CorlexAPI api = Bukkit.getServicesManager().load(CorlexAPI.class);
@@ -29,33 +47,16 @@ corlex:
 ```
 ---
 
-## 🔧 Config Example
-
-```yaml
-# Enable/Disable logging (universal)
-default-language: en
-logging-enabled: true
-server-name: Cublex
-
-# Variables to be used in the language files
-prefix: "#ffc13b[Corlex] &r"
-test-prefix: "&6[TEST] &r"
-discord: "https://discord.gg/cublex" # Chat and announcements but inactive in Turkey
-telegram: "https://t.me/mcublex" # Announcements and replies
-```
-
----
-
 ## 📦 Roadmap
 
 - GUI API (paged layouts, close/back buttons, border styles)
-- Per-player language preferences
 - Auto-merging of locale files on update
 - Plugin usage metrics
 - Announcement API (Game, Discord)
-- Use arguments for permission error message. Interaction or command error
+- AI module
+- Use arguments in permission-error message. Interaction or command error
 - Format commands help into clickable TextComponents
-- Paginate the output of help command if you add more commands
+- Paginate the output of help command for more commands
 - Auto-suggest when the user types an invalid command
 - Add force-default-language boolean
 
@@ -63,11 +64,11 @@ telegram: "https://t.me/mcublex" # Announcements and replies
 
 ## 📣 Need Help?
 
-This plugin is designed to be extended by other plugins. If you’re building something with Corlex, open an issue or contact the developer for help or contributions.
+This plugin is designed to be extended by other plugins. If you’re building something with Cub, open an issue or contact the developer for help or contributions.
 
 ---
 
-> Build smarter. Standardize everything. Use CublexCore.
+> Work smarter, build harder.
 
 NOTES ON GUI MODULE:
 1- if 6 lines, have a border in slots [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 17, 18, 26, 27, 35, 36, 44, 45, 46, 47, 48, 50, 51, 52, 53]
@@ -77,7 +78,5 @@ NOTES ON GUI MODULE:
 5- if 3 lines, have option to have border or not. single page or multi page. slots 23, 22, 21 are buttons.
 6- if single line and single page, no border, all 9 slots are custom
 
-Auto Spawn, Spawn teleport
-folder-level README templates or documentation boilerplate?
 
 
