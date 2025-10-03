@@ -1,6 +1,6 @@
 name: CublexCore
-version: ${version}
 main: io.github.devbd1.cublexcore.Main
+version: ${version}
 api-version: '1.21'
 load: STARTUP
 authors: [ DevBD1 ]
