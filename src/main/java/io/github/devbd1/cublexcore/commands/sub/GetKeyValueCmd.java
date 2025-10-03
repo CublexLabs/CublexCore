@@ -3,6 +3,7 @@ package io.github.devbd1.cublexcore.commands.sub;
 import io.github.devbd1.cublexcore.commands.CommandConfig;
 import io.github.devbd1.cublexcore.commands.SubCommand;
 import io.github.devbd1.cublexcore.modules.text.Lang;
+import io.github.devbd1.cublexcore.utilities.LocaleGetter;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -50,7 +51,7 @@ public class GetKeyValueCmd implements SubCommand{
                 sender.sendMessage("§cConsole must specify a language.");
                 return true;
             }
-            locale = player.locale().getLanguage().toLowerCase();
+            locale = LocaleGetter.getPlayerLocale(player);
             key = args[0];
             placeholderStartIndex = 1;
         }

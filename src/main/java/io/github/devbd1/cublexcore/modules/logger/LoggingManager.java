@@ -42,7 +42,7 @@ public class LoggingManager {
 
     /** Use this constructor in your Main: new LoggingManager(this) */
     public LoggingManager(JavaPlugin plugin) {
-        this.name    = plugin.getPluginMeta().getName();
+        this.name    = plugin.getName(); // plugin.getPluginMeta().getName();
         this.logger  = plugin.getLogger();
         // Path is correct: go up one level from CublexCore to plugins/, then to sibling logs_custom/
         this.logDir  = Path.of(".", "logs_custom", "server_logs");

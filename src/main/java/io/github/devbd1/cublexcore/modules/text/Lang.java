@@ -3,6 +3,7 @@ package io.github.devbd1.cublexcore.modules.text;
 import io.github.devbd1.cublexcore.utilities.ColorManager;
 import io.github.devbd1.cublexcore.utilities.ConfigManager;
 import io.github.devbd1.cublexcore.modules.logger.LoggingManager;
+import io.github.devbd1.cublexcore.utilities.LocaleGetter;
 import io.github.devbd1.cublexcore.utilities.PlaceholderManager;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -39,7 +40,7 @@ public class Lang {
             dynamic.putIfAbsent("world", "Console");
         }
 
-        String locale = (player != null) ? getLocale(player) : DEFAULT_LANG;
+        String locale = (player != null) ? LocaleGetter.getPlayerLocale(player) : DEFAULT_LANG;
         return translateForLocale(player, key, locale, dynamic);
     }
 
@@ -96,14 +97,6 @@ public class Lang {
         logger.log("[DEBUG] Final result: " + result);
 
         return result;
-    }
-
-    private static String getLocale(Player player) {
-        try {
-            return player.locale().getLanguage().toLowerCase();
-        } catch (Exception e) {
-            return DEFAULT_LANG;
-        }
     }
 
     public static String getNestedValue(Map<String, ?> map, String path) {
