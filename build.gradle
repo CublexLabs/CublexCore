@@ -31,15 +31,20 @@ repositories {
         name = "extendedclip"
         url = 'https://repo.extendedclip.com/releases/'
     }
+    maven {
+        name = "lushplugins"
+        url = "https://repo.lushplugins.org/releases/"
+    }
 }
 
 dependencies {
 //    compileOnly("io.papermc.paper:paper-api:1.21.8-R0.1-SNAPSHOT")
     compileOnly("org.spigotmc:spigot-api:1.21.8-R0.1-SNAPSHOT") //spigotmc-repo
-    compileOnly("com.comphenix.protocol:ProtocolLib:5.2.0") //dmulloy2
+    compileOnly("com.comphenix.protocol:ProtocolLib:5.1.0") //dmulloy2
     implementation("commons-io:commons-io:2.15.1") //sonatype
     implementation("de.tr7zw:item-nbt-api:2.15.1") //CodeMC
     compileOnly('me.clip:placeholderapi:2.11.6') //extendedclip
+    implementation("org.lushplugins:ChatColorHandler:4.0.0") //lushplugins
     compileOnly files('libs/RealisticSeasons-11.8.2.jar')
 }
 
