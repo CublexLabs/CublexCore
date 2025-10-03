@@ -1,5 +1,5 @@
 /**
- * Singleton helper to manage Corlex’s configuration.
+ * Singleton helper to manage the configuration.
  * • Call init(plugin) inside onEnable().
  * • Copies “lang/{fallback}.yml” from bundled resources if missing.
  * • Provides getString/getBoolean/getInt/getDouble/getList for safe reads with defaults.

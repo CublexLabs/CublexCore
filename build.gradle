@@ -7,34 +7,40 @@ group = 'io.github.devbd1'
 
 repositories {
     mavenCentral()
+//    maven {
+//        name = "papermc-repo"
+//        url = "https://repo.papermc.io/repository/maven-public/"
+//    }
     maven {
-        name = "papermc-repo"
-        url = "https://repo.papermc.io/repository/maven-public/"
+        name = "spigotmc-repo"
+        url = "https://hub.spigotmc.org/nexus/content/repositories/snapshots/"
+    }
+    maven {
+        name = "dmulloy2"
+        url = "https://repo.dmulloy2.net/nexus/repository/public/"
     }
     maven {
         name = "sonatype"
         url = "https://oss.sonatype.org/content/groups/public/"
     }
     maven {
-        url = "https://repo.dmulloy2.net/nexus/repository/public/"
-    }
-    maven {
         name = "CodeMC"
         url = uri("https://repo.codemc.io/repository/maven-public/")
     }
     maven {
+        name = "extendedclip"
         url = 'https://repo.extendedclip.com/releases/'
     }
 }
 
 dependencies {
-    compileOnly("io.papermc.paper:paper-api:1.21.8-R0.1-SNAPSHOT")
-    compileOnly "com.comphenix.protocol:ProtocolLib:5.1.0"
-    implementation "commons-io:commons-io:2.15.1"
-    implementation("de.tr7zw:item-nbt-api:2.15.1")
+//    compileOnly("io.papermc.paper:paper-api:1.21.8-R0.1-SNAPSHOT")
+    compileOnly("org.spigotmc:spigot-api:1.21.8-R0.1-SNAPSHOT") //spigotmc-repo
+    compileOnly("com.comphenix.protocol:ProtocolLib:5.2.0") //dmulloy2
+    implementation("commons-io:commons-io:2.15.1") //sonatype
+    implementation("de.tr7zw:item-nbt-api:2.15.1") //CodeMC
+    compileOnly('me.clip:placeholderapi:2.11.6') //extendedclip
     compileOnly files('libs/RealisticSeasons-11.8.2.jar')
-    compileOnly 'me.clip:placeholderapi:2.11.6'
-    //implementation 'io.github.projectunified:uni-dialog-paper:1.3.1'
 }
 
 tasks {
@@ -58,7 +64,7 @@ jar {
         configurations.runtimeClasspath.filter { it.name.endsWith("jar") }.collect { zipTree(it) }
     }
 
-    archiveClassifier.set("") // creates Cublex-1.1.0.jar instead of Cublex-1.1.0-all.jar
+    archiveClassifier.set("") // creates CublexCore-1.1.0.jar instead of CublexCore-1.1.0-all.jar
 }
 
 def targetJavaVersion = 21
