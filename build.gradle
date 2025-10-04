@@ -195,14 +195,14 @@ publishing {
                 password = System.getenv("OSSRH_PASSWORD")
             }
         }
-        maven {
-            name = "CublexLabs"
-            url = "https://repo.cublex.net/releases/"
-            credentials {
-                username = project.findProperty("cublexUser")
-                password = project.findProperty("cublexToken")
-            }
-        }
+//        maven {
+//            name = "CublexLabs"
+//            url = "https://repo.cublex.net/releases/"
+//            credentials {
+//                username = project.findProperty("cublexUser")
+//                password = project.findProperty("cublexToken")
+//            }
+//        }
 
     }
 }
