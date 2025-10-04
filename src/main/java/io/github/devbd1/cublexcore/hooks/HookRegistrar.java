@@ -4,7 +4,7 @@ import io.github.devbd1.cublexcore.Main;
 import io.github.devbd1.cublexcore.modules.logger.LoggingManager;
 import io.github.devbd1.cublexcore.hooks.PlaceholderAPI.PlaceholderApplier;
 //import io.github.devbd1.corlex.hooks.CubItems.ClientSideTextAdapter;
-import io.github.devbd1.cublexcore.hooks.RealisticSeasons.Listener;
+//import io.github.devbd1.cublexcore.hooks.RealisticSeasons.Listener;
 import org.bukkit.Bukkit;
 
 public final class HookRegistrar {
@@ -20,7 +20,7 @@ public final class HookRegistrar {
 
         // RealisticSeasons
         if (Bukkit.getPluginManager().isPluginEnabled("RealisticSeasons")) {
-            Bukkit.getPluginManager().registerEvents(new Listener(plugin), plugin);
+//            Bukkit.getPluginManager().registerEvents(new Listener(plugin), plugin);
             logger.log("RealisticSeasons listener registered.");
         } else {
             logger.log("RealisticSeasons not found. Skipped integration.");
