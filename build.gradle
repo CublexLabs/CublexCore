@@ -178,9 +178,9 @@ publishing {
                 }
 
                 scm {
-                    connection.set("scm:git:git://github.com/DevBD1/CublexCore.git")
-                    developerConnection.set("scm:git:ssh://github.com/DevBD1/CublexCore.git")
-                    url.set("https://github.com/DevBD1/CublexCore")
+                    connection.set("scm:git:git://github.com/CublexLabs/CublexCore.git")
+                    developerConnection.set("scm:git:ssh://github.com/CublexLabs/CublexCore.git")
+                    url.set("https://github.com/CublexLabs/CublexCore")
                 }
             }
         }
