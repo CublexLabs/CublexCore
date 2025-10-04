@@ -31,3 +31,7 @@ jobs:
           SIGNING_PASSWORD: ${{ secrets.SIGNING_PASSWORD }}
           GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
           GPG_OWNERTRUST: ${{ secrets.GPG_OWNERTRUST }}
+
+      - name: Check secrets
+        run: |
+          echo "Username: $OSSRH_USERNAME"
