@@ -1,6 +1,8 @@
 plugins {
     id 'java'
     id("xyz.jpenilla.run-paper") version "2.3.1"
+    id 'maven-publish'
+    id 'signing'
 }
 
 group = 'io.github.devbd1'
@@ -13,6 +15,8 @@ if (versionFile.exists()) {
     version = versionFile.text.trim()
 }
 println "[CublexCore] Using project.version = ${version}"
+
+description = 'Core API for Cublex Labs plugin ecosystem.'
 
 repositories {
     mavenCentral()
@@ -34,7 +38,7 @@ repositories {
     }
     maven {
         name = "CodeMC"
-        url = uri("https://repo.codemc.io/repository/maven-public/")
+        url = "https://repo.codemc.io/repository/maven-public/"
     }
     maven {
         name = "extendedclip"
@@ -145,4 +149,68 @@ tasks.register("bumpVersion") {
 
 tasks.register("bumpAndBuild") {
     dependsOn "bumpVersion", "build"
+}
+
+publishing {
+    publications {
+        create<MavenPublication>("mavenJava") {
+            from(components["java"])
+
+            pom {
+                name.set("CublexCore")
+                description.set("Core API for Cublex Labs Plugin Ecosystem")
+                url.set("https://github.com/CublexLabs/CublexCore")
+
+                licenses {
+                    license {
+                        name.set("Apache License, Version 2.0")
+                        url.set("https://www.apache.org/licenses/LICENSE-2.0")
+                    }
+                }
+
+                developers {
+                    developer {
+                        id.set("DevBD1")
+                        name.set("Burak Dorman")
+                        email.set("burakdorman@gmail.com")
+                    }
+                }
+
+                scm {
+                    connection.set("scm:git:git://github.com/DevBD1/CublexCore.git")
+                    developerConnection.set("scm:git:ssh://github.com/DevBD1/CublexCore.git")
+                    url.set("https://github.com/DevBD1/CublexCore")
+                }
+            }
+        }
+    }
+
+    repositories {
+        maven {
+            name = "OSSRH"
+            url = uri("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/")
+
+            credentials {
+                username = System.getenv("OSSRH_USERNAME")
+                password = System.getenv("OSSRH_PASSWORD")
+            }
+        }
+        maven {
+            name = "CublexLabs"
+            url = "https://repo.cublex.net/releases/"
+            credentials {
+                username = project.findProperty("cublexUser")
+                password = project.findProperty("cublexToken")
+            }
+        }
+
+    }
+}
+
+signing {
+    useInMemoryPgpKeys(
+            System.getenv("GPG_PRIVATE_KEY"),
+            System.getenv("SIGNING_PASSWORD")
+    )
+    sign publishing.publications.mavenJava
 }
