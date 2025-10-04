@@ -1,18 +1,18 @@
 # Static variables. These cannot be changed during runtime. You must stop the server to make changes here
 server-name: cublex.net
 fallback-language: en # it is used when the player's client locale is not supported
-logging-enabled: false # enable/disable logging into a separate file under /plugins/Corlex folder (universal)
-restful-enabled: false # enable/disable REST API on your server. Check https://dev.cublex.net/wiki/corlex/rest
+logging-enabled: false # enable/disable logging into a separate file under /plugins/CublexCore folder (universal)
+restful-enabled: false # enable/disable REST API on your server. Check https://labs.cublex.net/docs/category/common-in-all-plugins
 debug-mode: false # enable/disable DEBUG mode
 
 # Variables (as placeholders) that are used in the localization strings
-prefix: "#ffc13b[Corlex] &r"
-test-prefix: "&c[Corlex] &r"
-discord: "https://discord.gg/cublex" # Chat and announcements
-telegram: "https://t.me/mcublex" # Announcements and replies
+prefix: "#ffc13b[CublexCore] &r"
+test-prefix: "&c[CublexCore] &r"
+discord: "https://discord.gg/Hqq3CdnenN" # Chat and announcements
+telegram: "" # Announcements and replies
 mobile-app: "" # In-app purchases and spending shop
 
-# Settings for GUI module
+# Settings for GUI module (WIP)
 gui:
   titles:
     players: "&aOnline Players"
@@ -26,35 +26,35 @@ gui:
     name: " "
     slots: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 17, 18, 26, 27, 35, 36, 44, 45, 46, 47, 48, 50, 51, 52, 53]
 
-# Settings for RealisticSeasons hook
+# Settings for RealisticSeasons hook (WIP)
 
 # Commands
 commands:
   admin_cmds:
     permissions:
-      - corlex.admin.*
+      - cublexcore.admin.*
   version:
     aliases: [ver]
     permissions:
-      - corlex.admin.version
-      - corlex.admin.*
+      - cublexcore.admin.version
+      - cublexcore.admin.*
   reload:
     aliases: [rl, restart]
     permissions:
-      - corlex.admin.reload
-      - corlex.admin.*
+      - cublexcore.admin.reload
+      - cublexcore.admin.*
   lang:
     aliases: [language, l]
     permissions:
-      - corlex.admin.lang
-      - corlex.mod.lang
+      - cublexcore.admin.lang
+      - cublexcore.mod.lang
   log:
     aliases: [logs]
     permissions:
-      - corlex.admin.log
-      - corlex.mod.log
+      - cublexcore.admin.log
+      - cublexcore.mod.log
   gui:
     aliases: [menu, interface]
     permissions:
-      - corlex.gui
-      - corlex.user.gui
+      - cublexcore.gui
+      - cublexcore.user.gui
