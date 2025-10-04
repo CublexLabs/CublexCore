@@ -10,6 +10,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Debug secrets
+        run: |
+          echo "USERNAME=$OSSRH_USERNAME"
+          echo "PASSWORD=${#OSSRH_PASSWORD}"
+        env:
+          OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
+          OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
+
       - name: Checkout
         uses: actions/checkout@v4
 
@@ -32,6 +40,4 @@ jobs:
           GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
           GPG_OWNERTRUST: ${{ secrets.GPG_OWNERTRUST }}
 
-      - name: Check secrets
-        run: |
-          echo "Username: $OSSRH_USERNAME"
+
