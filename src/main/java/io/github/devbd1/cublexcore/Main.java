@@ -48,4 +48,8 @@ public class Main extends JavaPlugin {
         ServiceUnregistrar.unregisterAll(this, api, logger);
         logger.log("CublexCore is disabled.");
     }
+
+    public LoggingManager getLoggingManager() {
+        return logger;
+    }
 }

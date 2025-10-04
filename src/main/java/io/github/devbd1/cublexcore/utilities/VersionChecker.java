@@ -20,7 +20,7 @@ public class VersionChecker {
             if (isOutdated(version, latestTag)) {
                 ChatColorHandler.sendMessage(sender, "§eThere is a new version: §6" + latestTag + "§ePlease update!");
             } else {
-                ChatColorHandler.sendMessage(sender, "§2You are running the latest version for §6CublexCore§2.");
+                ChatColorHandler.sendMessage(sender, "§2You are running the latest version for §6" + name + "§2.");
             }
         }
     }
@@ -34,7 +34,7 @@ public class VersionChecker {
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
             conn.setRequestProperty("Accept", "application/vnd.github+json");
-            conn.setRequestProperty("User-Agent", "CublexCore-VersionChecker");  // GitHub API isteği için User-Agent gerekebilir
+            conn.setRequestProperty("User-Agent", "CublexCore-VersionChecker");  // User-Agent may be required for GitHub API req
 
             int status = conn.getResponseCode();
             if (status != 200) {
