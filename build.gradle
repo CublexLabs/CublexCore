@@ -20,10 +20,10 @@ description = 'Core API for Cublex Labs plugin ecosystem.'
 
 repositories {
     mavenCentral()
-//    maven {
-//        name = "papermc-repo"
-//        url = "https://repo.papermc.io/repository/maven-public/"
-//    }
+    maven {
+        name = "papermc-repo"
+        url = "https://repo.papermc.io/repository/maven-public/"
+    }
     maven {
         name = "spigotmc-repo"
         url = "https://hub.spigotmc.org/nexus/content/repositories/snapshots/"
