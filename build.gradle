@@ -153,7 +153,8 @@ tasks.register("bumpAndBuild") {
 
 publishing {
     publications {
-        create<MavenPublication>("mavenJava") {
+        create("mavenJava", MavenPublication) {
+
             from(components["java"])
 
             pom {
