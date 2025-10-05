@@ -20,14 +20,14 @@ description = 'Core API for Cublex Labs plugin ecosystem.'
 
 repositories {
     mavenCentral()
-//    maven {
-//        name = "papermc-repo"
-//        url = "https://repo.papermc.io/repository/maven-public/"
-//    }
     maven {
-        name = "spigotmc-repo"
-        url = "https://hub.spigotmc.org/nexus/content/repositories/snapshots/"
+        name = "papermc-repo"
+        url = "https://repo.papermc.io/repository/maven-public/"
     }
+//    maven {
+//        name = "spigotmc-repo"
+//        url = "https://hub.spigotmc.org/nexus/content/repositories/snapshots/"
+//    }
     maven {
         name = "dmulloy2"
         url = "https://repo.dmulloy2.net/nexus/repository/public/"
@@ -51,8 +51,8 @@ repositories {
 }
 
 dependencies {
-//    compileOnly("io.papermc.paper:paper-api:1.21.8-R0.1-SNAPSHOT")
-    compileOnly("org.spigotmc:spigot-api:1.21.8-R0.1-SNAPSHOT") //spigotmc-repo
+    compileOnly("io.papermc.paper:paper-api:1.21.8-R0.1-SNAPSHOT") //papermc-repo
+//    compileOnly("org.spigotmc:spigot-api:1.21.8-R0.1-SNAPSHOT") //spigotmc-repo
     compileOnly 'net.dmulloy2:ProtocolLib:5.4.0' //dmulloy2 "com.comphenix.protocol:ProtocolLib:5.1.0"
     implementation("commons-io:commons-io:2.15.1") //sonatype
     implementation("de.tr7zw:item-nbt-api:2.15.1") //CodeMC
@@ -152,10 +152,8 @@ tasks.register("bumpAndBuild") {
 
 publishing {
     publications {
-        create("mavenJava", MavenPublication) {
-
-            from(components["java"])
-
+        mavenJava(MavenPublication) {
+            from components.java
             pom {
                 name.set("CublexCore")
                 description.set("Core API for Cublex Labs Plugin Ecosystem")
@@ -188,13 +186,11 @@ publishing {
     repositories {
         maven {
             name = "OSSRH"
-            url = uri("https://central.sonatype.com/api/v1/publish")
+            url = uri("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/")
 
             credentials {
-//                username = project.findProperty("ossrhUsername") ?: System.getenv("OSSRH_USERNAME")
-//                password = project.findProperty("ossrhPassword") ?: System.getenv("OSSRH_PASSWORD")
-                username = System.getenv("OSSRH_USERNAME")
-                password = System.getenv("OSSRH_PASSWORD")
+                username = project.findProperty("ossrhUsername") ?: System.getenv("OSSRH_USERNAME")
+                password = project.findProperty("ossrhPassword") ?: System.getenv("OSSRH_PASSWORD")
             }
         }
 //        maven {
@@ -210,9 +206,18 @@ publishing {
 }
 
 signing {
-    useInMemoryPgpKeys(
-            System.getenv("GPG_PRIVATE_KEY"),
-            System.getenv("SIGNING_PASSWORD")
-    )
-    sign publishing.publications.mavenJava
+    def keyFile = project.findProperty("signing.keyFile")
+
+    def signingKeyId = project.findProperty("signing.keyId") ?: System.getenv("SIGNING_KEY_ID")
+    def signingKey = keyFile ? file(keyFile).text : System.getenv("SIGNING_KEY")
+    def signingPassword = project.findProperty("signing.password") ?: System.getenv("SIGNING_PASSWORD")
+
+    if (keyFile && signingPassword) {
+        useInMemoryPgpKeys(signingKey, signingPassword as String)
+        sign publishing.publications.mavenJava
+        logger.lifecycle("[CublexCore] Signing configured using key file: ${keyFile}")
+    } else {
+        logger.warn("[CublexCore] Signing skipped — missing signing.keyFile or signing.password.")
+    }
 }
+
