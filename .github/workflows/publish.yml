@@ -3,7 +3,9 @@ name: Publish CublexCore to Maven Central
 on:
   push:
     tags:
-      - 'v*'  # Only if the pushed tag starts with v. Like v2.0.0
+      #- 'v*'  # Only if the pushed tag starts with v. Like v2.0.0
+      # inactivated temporarily
+      - 'c'
 
 jobs:
   publish:
