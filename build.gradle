@@ -19,6 +19,7 @@ println "[CublexCore] Using project.version = ${version}"
 description = 'Core API for Cublex Labs plugin ecosystem.'
 
 repositories {
+    mavenLocal()
     mavenCentral()
     maven {
         name = "papermc-repo"
